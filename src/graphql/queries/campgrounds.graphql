@@ -1,0 +1,6 @@
+query Campgrounds {
+  campgrounds {
+    id
+    name
+  }
+}

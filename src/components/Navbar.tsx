@@ -3,11 +3,17 @@ import React from "react";
 import Link from "next/link";
 import { useCurrentUserQuery, useLogoutMutation } from "../generated/graphql";
 import { Button } from "@chakra-ui/button";
+import { isServer } from "../utils/isServer";
 
 interface NavbarProps {}
 
 export const Navbar: React.FC<NavbarProps> = ({}) => {
-  const [{ data, fetching }] = useCurrentUserQuery();
+  const [{ data, fetching }] = useCurrentUserQuery({
+    // NOTE: the query is not gonna run on the server
+    // because we don't need it. CurrentUser doesn't affect
+    // SEO
+    pause: isServer(),
+  });
   const [{ fetching: logoutFetching }, logout] = useLogoutMutation();
 
   let body;

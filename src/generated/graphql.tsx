@@ -133,6 +133,11 @@ export type RegisterMutationVariables = Exact<{
 
 export type RegisterMutation = { __typename?: 'Mutation', register: { __typename?: 'UserResponse', errors?: Array<{ __typename?: 'FieldError', field: string, message: string }> | null | undefined, user?: { __typename?: 'User', id: number, username: string, name: string, email: string } | null | undefined } };
 
+export type CampgroundsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type CampgroundsQuery = { __typename?: 'Query', campgrounds: Array<{ __typename?: 'Campground', id: number, name: string }> };
+
 export type CurrentUserQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -190,6 +195,18 @@ export const RegisterDocument = gql`
 
 export function useRegisterMutation() {
   return Urql.useMutation<RegisterMutation, RegisterMutationVariables>(RegisterDocument);
+};
+export const CampgroundsDocument = gql`
+    query Campgrounds {
+  campgrounds {
+    id
+    name
+  }
+}
+    `;
+
+export function useCampgroundsQuery(options: Omit<Urql.UseQueryArgs<CampgroundsQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<CampgroundsQuery>({ query: CampgroundsDocument, ...options });
 };
 export const CurrentUserDocument = gql`
     query CurrentUser {
