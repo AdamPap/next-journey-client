@@ -13,8 +13,7 @@ mutation Register(
     }
   ) {
     errors {
-      field
-      message
+      ...RegularError
     }
     user {
       ...RegularUser
