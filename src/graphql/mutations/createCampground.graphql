@@ -1,0 +1,7 @@
+mutation CreateCampground($name: String!, $location: String!) {
+  createCampground(name: $name, location: $location) {
+    id
+    name
+    location
+  }
+}

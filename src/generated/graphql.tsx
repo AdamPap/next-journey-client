@@ -19,9 +19,11 @@ export type Scalars = {
 export type Campground = {
   __typename?: 'Campground';
   createdAt: Scalars['DateTime'];
+  creatorId: Scalars['Float'];
   id: Scalars['Float'];
   location: Scalars['String'];
   name: Scalars['String'];
+  points: Scalars['Float'];
   updatedAt: Scalars['DateTime'];
 };
 
@@ -134,6 +136,14 @@ export type ChangePasswordMutationVariables = Exact<{
 
 export type ChangePasswordMutation = { __typename?: 'Mutation', changePassword: { __typename?: 'UserResponse', errors?: Array<{ __typename?: 'FieldError', field: string, message: string }> | null | undefined, user?: { __typename?: 'User', id: number, username: string, name: string, email: string } | null | undefined } };
 
+export type CreateCampgroundMutationVariables = Exact<{
+  name: Scalars['String'];
+  location: Scalars['String'];
+}>;
+
+
+export type CreateCampgroundMutation = { __typename?: 'Mutation', createCampground: { __typename?: 'Campground', id: number, name: string, location: string } };
+
 export type ForgotPasswordMutationVariables = Exact<{
   email: Scalars['String'];
 }>;
@@ -203,6 +213,19 @@ ${RegularUserFragmentDoc}`;
 
 export function useChangePasswordMutation() {
   return Urql.useMutation<ChangePasswordMutation, ChangePasswordMutationVariables>(ChangePasswordDocument);
+};
+export const CreateCampgroundDocument = gql`
+    mutation CreateCampground($name: String!, $location: String!) {
+  createCampground(name: $name, location: $location) {
+    id
+    name
+    location
+  }
+}
+    `;
+
+export function useCreateCampgroundMutation() {
+  return Urql.useMutation<CreateCampgroundMutation, CreateCampgroundMutationVariables>(CreateCampgroundDocument);
 };
 export const ForgotPasswordDocument = gql`
     mutation ForgotPassword($email: String!) {
