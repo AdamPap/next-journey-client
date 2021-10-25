@@ -1,40 +1,34 @@
-import { EmailIcon } from "@chakra-ui/icons";
-import { Box, Link } from "@chakra-ui/layout";
+import { Box } from "@chakra-ui/layout";
 import { Button } from "@chakra-ui/react";
-import { Formik, Form } from "formik";
+import { Form, Formik } from "formik";
 import { withUrqlClient } from "next-urql";
-import router from "next/router";
-import React from "react";
+import React, { useState } from "react";
 import { InputField } from "../components/InputField";
 import Wrapper from "../components/Wrapper";
 import { useForgotPasswordMutation } from "../generated/graphql";
 import { createUrqlClient } from "../utils/createUrqlClient";
-import { toErrorMap } from "../utils/toErrorMap";
 
 const ForgotPassword: React.FC<{}> = ({}) => {
   const [, forgotPassword] = useForgotPasswordMutation();
+  const [isComplete, setIsComplete] = useState(false);
 
   return (
     <Wrapper variant="small">
       <Formik
         initialValues={{ email: "" }}
         onSubmit={async (values, { setErrors }) => {
-          const res = await forgotPassword({
-            email: values.email,
-          });
-
-          // if (res.data?.forgotPassword) {
-          //   const errorMap = toErrorMap(res.data.changePassword.errors);
-
-          //   setErrors(errorMap);
-          // } else if (res.data?.changePassword.user) {
-          //   router.push("/");
-          // }
+          await forgotPassword(values);
+          setIsComplete(true);
         }}
       >
         {({ isSubmitting }) => (
           <Form>
-            <InputField name="email" label="Email" placeholder="Email" />
+            <InputField
+              name="email"
+              label="Email"
+              placeholder="Email"
+              type="email"
+            />
             <Button
               mt={4}
               isLoading={isSubmitting}
@@ -43,6 +37,12 @@ const ForgotPassword: React.FC<{}> = ({}) => {
             >
               Send Email
             </Button>
+            {isComplete ? (
+              <Box mt={3} color="gray.600">
+                If there is an account associated with this email, you will
+                receive a link to change your password.
+              </Box>
+            ) : null}
           </Form>
         )}
       </Formik>
