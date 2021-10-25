@@ -10,6 +10,7 @@ import { useState } from "react";
 import { Box } from "@chakra-ui/layout";
 import { withUrqlClient } from "next-urql";
 import { createUrqlClient } from "../../utils/createUrqlClient";
+import Error from "../../components/Error";
 
 const ChangePassword: NextPage<{ token: string }> = ({ token }) => {
   const router = useRouter();
@@ -47,7 +48,7 @@ const ChangePassword: NextPage<{ token: string }> = ({ token }) => {
               placeholder="New Password"
               type="password"
             />
-            <Box color="red">{tokenError}</Box>
+            {tokenError ? <Error tokenError={tokenError} /> : null}
             <Button
               mt={4}
               isLoading={isSubmitting}
