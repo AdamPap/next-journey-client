@@ -1,34 +1,33 @@
-import { Box, Flex, Link } from "@chakra-ui/layout";
+import { Box, Flex } from "@chakra-ui/layout";
 import { Button } from "@chakra-ui/react";
-import { Formik, Form } from "formik";
+import { Form, Formik } from "formik";
 import { withUrqlClient } from "next-urql";
-import router from "next/router";
+import { useRouter } from "next/router";
 import React from "react";
 import { InputField } from "../components/InputField";
-import Wrapper from "../components/Wrapper";
+import { Layout } from "../components/Layout";
 import { useCreateCampgroundMutation } from "../generated/graphql";
 import { createUrqlClient } from "../utils/createUrqlClient";
-import { toErrorMap } from "../utils/toErrorMap";
-import login from "./login";
 
 const CreateCampground: React.FC<{}> = ({}) => {
   const [, createCampground] = useCreateCampgroundMutation();
+  const router = useRouter();
 
   return (
-    <Wrapper variant="small">
+    <Layout variant="small">
       <Formik
         initialValues={{ name: "", location: "" }}
-        onSubmit={async (values, { setErrors }) => {
-          const res = await createCampground({
+        onSubmit={async (values) => {
+          const { error } = await createCampground({
             name: values.name,
             location: values.location,
           });
-          console.log(res);
-          // if (res.data?.login.errors) {
-          //   setErrors(toErrorMap(res.data.login.errors));
-          // } else if (res.data?.login.user) {
-          //   router.push("/");
-          // }
+
+          if (error?.message.includes("Not authenticated")) {
+            router.push("/login");
+          } else {
+            router.push("/");
+          }
         }}
       >
         {({ isSubmitting }) => (
@@ -57,7 +56,7 @@ const CreateCampground: React.FC<{}> = ({}) => {
           </Form>
         )}
       </Formik>
-    </Wrapper>
+    </Layout>
   );
 };
 
