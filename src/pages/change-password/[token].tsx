@@ -49,16 +49,7 @@ const ChangePassword: NextPage<{ token: string }> = ({ token }) => {
               placeholder="New Password"
               type="password"
             />
-            {tokenError ? (
-              <Box>
-                <Error tokenError={tokenError} />
-                <NextLink href="/forgot-password">
-                  <Link color="blue">
-                    Invalid token? Change password again.
-                  </Link>
-                </NextLink>
-              </Box>
-            ) : null}
+            {tokenError ? <Error tokenError={tokenError} /> : null}
             <Button
               mt={4}
               isLoading={isSubmitting}
@@ -67,6 +58,13 @@ const ChangePassword: NextPage<{ token: string }> = ({ token }) => {
             >
               Change Password
             </Button>
+            {tokenError ? (
+              <Box mt={4}>
+                <NextLink href="/forgot-password">
+                  <Link color="blue">Invalid token? Send email again.</Link>
+                </NextLink>
+              </Box>
+            ) : null}
           </Form>
         )}
       </Formik>

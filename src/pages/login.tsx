@@ -48,7 +48,7 @@ const Login = () => {
               colorScheme="teal"
               type="submit"
             >
-              Register
+              Login
             </Button>
           </Form>
         )}
