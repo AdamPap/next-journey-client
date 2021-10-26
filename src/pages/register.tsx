@@ -9,13 +9,14 @@ import { toErrorMap } from "../utils/toErrorMap";
 import { useRouter } from "next/dist/client/router";
 import { withUrqlClient } from "next-urql";
 import { createUrqlClient } from "../utils/createUrqlClient";
+import { Layout } from "../components/Layout";
 
 const Register = () => {
   const router = useRouter();
   const [{}, register] = useRegisterMutation();
 
   return (
-    <Wrapper variant="small">
+    <Layout variant="small">
       <Formik
         initialValues={{ username: "", password: "", name: "", email: "" }}
         onSubmit={async (values, { setErrors }) => {
@@ -69,7 +70,7 @@ const Register = () => {
           </Form>
         )}
       </Formik>
-    </Wrapper>
+    </Layout>
   );
 };
 

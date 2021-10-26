@@ -3,15 +3,25 @@ import { Button } from "@chakra-ui/react";
 import { Form, Formik } from "formik";
 import { withUrqlClient } from "next-urql";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useEffect } from "react";
 import { InputField } from "../components/InputField";
 import { Layout } from "../components/Layout";
-import { useCreateCampgroundMutation } from "../generated/graphql";
+import {
+  useCreateCampgroundMutation,
+  useCurrentUserQuery,
+} from "../generated/graphql";
 import { createUrqlClient } from "../utils/createUrqlClient";
 
 const CreateCampground: React.FC<{}> = ({}) => {
+  const [{ data, fetching }] = useCurrentUserQuery();
   const [, createCampground] = useCreateCampgroundMutation();
   const router = useRouter();
+
+  useEffect(() => {
+    if (!fetching && !data?.currentUser) {
+      router.replace("/login");
+    }
+  }, [fetching, data, router]);
 
   return (
     <Layout variant="small">
