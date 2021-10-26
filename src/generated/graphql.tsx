@@ -185,7 +185,7 @@ export type CampgroundsQueryVariables = Exact<{
 }>;
 
 
-export type CampgroundsQuery = { __typename?: 'Query', campgrounds: Array<{ __typename?: 'Campground', id: number, name: string, createdAt: any, updatedAt: any }> };
+export type CampgroundsQuery = { __typename?: 'Query', campgrounds: Array<{ __typename?: 'Campground', id: number, name: string, location: string, createdAt: any, updatedAt: any }> };
 
 export type CurrentUserQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -295,6 +295,7 @@ export const CampgroundsDocument = gql`
   campgrounds(limit: $limit, cursor: $cursor) {
     id
     name
+    location
     createdAt
     updatedAt
   }
