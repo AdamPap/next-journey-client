@@ -6,7 +6,11 @@ import { createUrqlClient } from "../utils/createUrqlClient";
 import NextLink from "next/link";
 
 const Index = () => {
-  const [{ data }] = useCampgroundsQuery();
+  const [{ data }] = useCampgroundsQuery({
+    variables: {
+      limit: 10,
+    },
+  });
   return (
     <>
       <Navbar />

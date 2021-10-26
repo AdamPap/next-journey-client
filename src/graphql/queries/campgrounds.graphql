@@ -1,6 +1,8 @@
-query Campgrounds {
-  campgrounds {
+query Campgrounds($limit: Int!, $cursor: String) {
+  campgrounds(limit: $limit, cursor: $cursor) {
     id
     name
+    createdAt
+    updatedAt
   }
 }

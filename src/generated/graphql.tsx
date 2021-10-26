@@ -101,6 +101,12 @@ export type QueryCampgroundArgs = {
   id: Scalars['Int'];
 };
 
+
+export type QueryCampgroundsArgs = {
+  cursor?: Maybe<Scalars['String']>;
+  limit: Scalars['Int'];
+};
+
 export type RegisterInput = {
   email: Scalars['String'];
   name: Scalars['String'];
@@ -173,10 +179,13 @@ export type RegisterMutationVariables = Exact<{
 
 export type RegisterMutation = { __typename?: 'Mutation', register: { __typename?: 'UserResponse', errors?: Array<{ __typename?: 'FieldError', field: string, message: string }> | null | undefined, user?: { __typename?: 'User', id: number, username: string, name: string, email: string } | null | undefined } };
 
-export type CampgroundsQueryVariables = Exact<{ [key: string]: never; }>;
+export type CampgroundsQueryVariables = Exact<{
+  limit: Scalars['Int'];
+  cursor?: Maybe<Scalars['String']>;
+}>;
 
 
-export type CampgroundsQuery = { __typename?: 'Query', campgrounds: Array<{ __typename?: 'Campground', id: number, name: string }> };
+export type CampgroundsQuery = { __typename?: 'Query', campgrounds: Array<{ __typename?: 'Campground', id: number, name: string, createdAt: any, updatedAt: any }> };
 
 export type CurrentUserQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -282,10 +291,12 @@ export function useRegisterMutation() {
   return Urql.useMutation<RegisterMutation, RegisterMutationVariables>(RegisterDocument);
 };
 export const CampgroundsDocument = gql`
-    query Campgrounds {
-  campgrounds {
+    query Campgrounds($limit: Int!, $cursor: String) {
+  campgrounds(limit: $limit, cursor: $cursor) {
     id
     name
+    createdAt
+    updatedAt
   }
 }
     `;
