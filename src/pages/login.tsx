@@ -1,6 +1,5 @@
 import React from "react";
 import { Form, Formik } from "formik";
-import Wrapper from "../components/Wrapper";
 import { InputField } from "../components/InputField";
 import { Box, Flex, Link } from "@chakra-ui/layout";
 import { Button } from "@chakra-ui/button";
