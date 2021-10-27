@@ -6,12 +6,16 @@ import NextLink from "next/link";
 import { Stack, Heading } from "@chakra-ui/react";
 import { Layout } from "../components/Layout";
 import { Button } from "@chakra-ui/button";
+import { useState } from "react";
 
 const Index = () => {
+  const [variables, setVariables] = useState({
+    limit: 10,
+    cursor: null as null | string,
+  });
+
   const [{ data, fetching }] = useCampgroundsQuery({
-    variables: {
-      limit: 10,
-    },
+    variables,
   });
 
   if (!fetching && !data) {
@@ -44,7 +48,17 @@ const Index = () => {
         )}
 
         {data ? (
-          <Button isLoading={fetching} my={8} colorScheme="teal">
+          <Button
+            onClick={() => {
+              setVariables({
+                limit: variables.limit,
+                cursor: data.campgrounds[data.campgrounds.length - 1].createdAt,
+              });
+            }}
+            isLoading={fetching}
+            my={8}
+            colorScheme="teal"
+          >
             Load More
           </Button>
         ) : null}

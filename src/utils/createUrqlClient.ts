@@ -1,5 +1,10 @@
-import { dedupExchange, fetchExchange, ssrExchange } from "@urql/core";
-import { cacheExchange } from "@urql/exchange-graphcache";
+import {
+  dedupExchange,
+  fetchExchange,
+  ssrExchange,
+  stringifyVariables,
+} from "@urql/core";
+import { cacheExchange, Resolver } from "@urql/exchange-graphcache";
 import {
   LogoutMutation,
   CurrentUserQuery,
@@ -9,6 +14,45 @@ import {
 } from "../generated/graphql";
 import { betterUpdateQuery } from "./betterUpdateQuery";
 
+export type MergeMode = "before" | "after";
+
+export interface PaginationParams {
+  cursorArgument?: string;
+}
+
+export const cursorPagination = (): Resolver<any, any, any> => {
+  return (_parent, fieldArgs, cache, info) => {
+    const { parentKey: entityKey, fieldName } = info;
+
+    const allFields = cache.inspectFields(entityKey);
+
+    const fieldInfos = allFields.filter((info) => info.fieldName === fieldName);
+    const size = fieldInfos.length;
+    // NOTE: in case of cache miss
+    if (size === 0) {
+      return undefined;
+    }
+
+    const fieldKey = `${fieldName}(${stringifyVariables(fieldArgs)})`;
+    const isItInCache = cache.resolve(entityKey, fieldKey);
+
+    console.log("Field name: ", fieldName);
+    console.log("My field key: ", fieldKey);
+    console.log("Is it in cache: ", isItInCache);
+
+    info.partial = !isItInCache;
+    console.log("info partial: ", info.partial);
+
+    const results: string[] = [];
+    fieldInfos.forEach((fi) => {
+      const data = cache.resolve(entityKey, fi.fieldKey) as string[];
+      results.push(...data);
+    });
+
+    return results;
+  };
+};
+
 export const createUrqlClient = (ssrExchange: any) => ({
   url: "http://localhost:3001/graphql",
   fetchOptions: {
@@ -17,6 +61,11 @@ export const createUrqlClient = (ssrExchange: any) => ({
   exchanges: [
     dedupExchange,
     cacheExchange({
+      resolvers: {
+        Query: {
+          campgrounds: cursorPagination(),
+        },
+      },
       updates: {
         Mutation: {
           logout: (_result, args, cache, info) => {
