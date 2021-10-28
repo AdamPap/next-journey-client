@@ -19,6 +19,7 @@ export type Scalars = {
 export type Campground = {
   __typename?: 'Campground';
   createdAt: Scalars['DateTime'];
+  creator: User;
   creatorId: Scalars['Float'];
   id: Scalars['Float'];
   location: Scalars['String'];
@@ -191,7 +192,7 @@ export type CampgroundsQueryVariables = Exact<{
 }>;
 
 
-export type CampgroundsQuery = { __typename?: 'Query', campgrounds: { __typename?: 'PaginatedCampgrounds', hasMore: boolean, campgrounds: Array<{ __typename?: 'Campground', id: number, name: string, location: string, createdAt: any, updatedAt: any }> } };
+export type CampgroundsQuery = { __typename?: 'Query', campgrounds: { __typename?: 'PaginatedCampgrounds', hasMore: boolean, campgrounds: Array<{ __typename?: 'Campground', id: number, name: string, location: string, createdAt: any, updatedAt: any, creator: { __typename?: 'User', id: number, name: string, username: string } }> } };
 
 export type CurrentUserQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -306,6 +307,11 @@ export const CampgroundsDocument = gql`
       location
       createdAt
       updatedAt
+      creator {
+        id
+        name
+        username
+      }
     }
   }
 }

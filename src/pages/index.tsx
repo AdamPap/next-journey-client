@@ -38,7 +38,10 @@ const Index = () => {
           <Stack spacing={8}>
             {data.campgrounds.campgrounds.map((camp) => (
               <Box p={5} shadow="md" borderWidth="1px" key={camp.id}>
-                <Heading fontSize="lg"> {camp.name} </Heading>
+                <Flex justifyContent="space-between">
+                  <Heading fontSize="lg"> {camp.name} </Heading>
+                  <Text>By {camp.creator.name}</Text>
+                </Flex>
                 <Text mt={4}>{camp.location}</Text>
               </Box>
             ))}

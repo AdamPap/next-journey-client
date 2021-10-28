@@ -7,6 +7,11 @@ query Campgrounds($limit: Int!, $cursor: String) {
       location
       createdAt
       updatedAt
+      creator {
+        id
+        name
+        username
+      }
     }
   }
 }
