@@ -89,10 +89,16 @@ export type MutationUpdateCampgroundArgs = {
   name: Scalars['String'];
 };
 
+export type PaginatedCampgrounds = {
+  __typename?: 'PaginatedCampgrounds';
+  campgrounds: Array<Campground>;
+  hasMore: Scalars['Boolean'];
+};
+
 export type Query = {
   __typename?: 'Query';
   campground?: Maybe<Campground>;
-  campgrounds: Array<Campground>;
+  campgrounds: PaginatedCampgrounds;
   currentUser?: Maybe<User>;
 };
 
@@ -185,7 +191,7 @@ export type CampgroundsQueryVariables = Exact<{
 }>;
 
 
-export type CampgroundsQuery = { __typename?: 'Query', campgrounds: Array<{ __typename?: 'Campground', id: number, name: string, location: string, createdAt: any, updatedAt: any }> };
+export type CampgroundsQuery = { __typename?: 'Query', campgrounds: { __typename?: 'PaginatedCampgrounds', hasMore: boolean, campgrounds: Array<{ __typename?: 'Campground', id: number, name: string, location: string, createdAt: any, updatedAt: any }> } };
 
 export type CurrentUserQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -293,11 +299,14 @@ export function useRegisterMutation() {
 export const CampgroundsDocument = gql`
     query Campgrounds($limit: Int!, $cursor: String) {
   campgrounds(limit: $limit, cursor: $cursor) {
-    id
-    name
-    location
-    createdAt
-    updatedAt
+    hasMore
+    campgrounds {
+      id
+      name
+      location
+      createdAt
+      updatedAt
+    }
   }
 }
     `;

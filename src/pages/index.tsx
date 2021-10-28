@@ -36,7 +36,7 @@ const Index = () => {
       <Box px={5}>
         {data && !fetching ? (
           <Stack spacing={8}>
-            {data.campgrounds.map((camp) => (
+            {data.campgrounds.campgrounds.map((camp) => (
               <Box p={5} shadow="md" borderWidth="1px" key={camp.id}>
                 <Heading fontSize="lg"> {camp.name} </Heading>
                 <Text mt={4}>{camp.location}</Text>
@@ -47,12 +47,15 @@ const Index = () => {
           <div>...loading</div>
         )}
 
-        {data ? (
+        {data && data.campgrounds.hasMore ? (
           <Button
             onClick={() => {
               setVariables({
                 limit: variables.limit,
-                cursor: data.campgrounds[data.campgrounds.length - 1].createdAt,
+                cursor:
+                  data.campgrounds.campgrounds[
+                    data.campgrounds.campgrounds.length - 1
+                  ].createdAt,
               });
             }}
             isLoading={fetching}

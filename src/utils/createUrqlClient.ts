@@ -34,22 +34,36 @@ export const cursorPagination = (): Resolver<any, any, any> => {
     }
 
     const fieldKey = `${fieldName}(${stringifyVariables(fieldArgs)})`;
-    const isItInCache = cache.resolve(entityKey, fieldKey);
+    const isItInCache = cache.resolve(
+      cache.resolve(entityKey, fieldKey) as string,
+      "campgrounds"
+    );
 
-    console.log("Field name: ", fieldName);
-    console.log("My field key: ", fieldKey);
-    console.log("Is it in cache: ", isItInCache);
+    // console.log("Field name: ", fieldName);
+    // console.log("My field key: ", fieldKey);
+    // console.log("Is it in cache: ", isItInCache);
 
     info.partial = !isItInCache;
-    console.log("info partial: ", info.partial);
+    // console.log("info partial: ", info.partial);
 
     const results: string[] = [];
+    let hasMore = true;
     fieldInfos.forEach((fi) => {
-      const data = cache.resolve(entityKey, fi.fieldKey) as string[];
+      const key = cache.resolve(entityKey, fi.fieldKey) as string;
+      const data = cache.resolve(key, "campgrounds") as string[];
+      const _hasMore = cache.resolve(key, "hasMore");
+      if (!_hasMore) {
+        hasMore = _hasMore as boolean;
+      }
+
       results.push(...data);
     });
 
-    return results;
+    return {
+      __typename: "PaginatedCampgrounds",
+      hasMore,
+      campgrounds: results,
+    };
   };
 };
 
@@ -61,6 +75,9 @@ export const createUrqlClient = (ssrExchange: any) => ({
   exchanges: [
     dedupExchange,
     cacheExchange({
+      keys: {
+        PaginatedCampgrounds: () => null,
+      },
       resolvers: {
         Query: {
           campgrounds: cursorPagination(),

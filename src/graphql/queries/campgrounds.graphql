@@ -1,9 +1,12 @@
 query Campgrounds($limit: Int!, $cursor: String) {
   campgrounds(limit: $limit, cursor: $cursor) {
-    id
-    name
-    location
-    createdAt
-    updatedAt
+    hasMore
+    campgrounds {
+      id
+      name
+      location
+      createdAt
+      updatedAt
+    }
   }
 }
