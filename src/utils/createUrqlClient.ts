@@ -86,10 +86,15 @@ export const createUrqlClient = (ssrExchange: any) => ({
       updates: {
         Mutation: {
           createCampground: (_result, args, cache, info) => {
-            // NOTE: value of limit has to match pagination query
-            // on index page
-            cache.invalidate("Query", "campgrounds", {
-              limit: 10,
+            const allFields = cache.inspectFields("Query");
+            const fieldInfos = allFields.filter(
+              (info) => info.fieldName === "campgrounds"
+            );
+
+            fieldInfos.forEach((fi) => {
+              // NOTE: value of limit has to match pagination query
+              // on index page
+              cache.invalidate("Query", "campgrounds", fi.arguments || {});
             });
           },
           logout: (_result, args, cache, info) => {
