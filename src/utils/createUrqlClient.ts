@@ -85,6 +85,13 @@ export const createUrqlClient = (ssrExchange: any) => ({
       },
       updates: {
         Mutation: {
+          createCampground: (_result, args, cache, info) => {
+            // NOTE: value of limit has to match pagination query
+            // on index page
+            cache.invalidate("Query", "campgrounds", {
+              limit: 10,
+            });
+          },
           logout: (_result, args, cache, info) => {
             betterUpdateQuery<LogoutMutation, CurrentUserQuery>(
               cache,
