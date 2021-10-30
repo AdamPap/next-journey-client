@@ -49,6 +49,7 @@ export type Mutation = {
   logout: Scalars['Boolean'];
   register: UserResponse;
   updateCampground?: Maybe<Campground>;
+  vote: Scalars['Boolean'];
 };
 
 
@@ -88,6 +89,12 @@ export type MutationUpdateCampgroundArgs = {
   id: Scalars['Int'];
   location: Scalars['String'];
   name: Scalars['String'];
+};
+
+
+export type MutationVoteArgs = {
+  campgroundId: Scalars['Int'];
+  value: Scalars['Int'];
 };
 
 export type PaginatedCampgrounds = {
@@ -192,7 +199,7 @@ export type CampgroundsQueryVariables = Exact<{
 }>;
 
 
-export type CampgroundsQuery = { __typename?: 'Query', campgrounds: { __typename?: 'PaginatedCampgrounds', hasMore: boolean, campgrounds: Array<{ __typename?: 'Campground', id: number, name: string, location: string, createdAt: any, updatedAt: any, creator: { __typename?: 'User', id: number, name: string, username: string } }> } };
+export type CampgroundsQuery = { __typename?: 'Query', campgrounds: { __typename?: 'PaginatedCampgrounds', hasMore: boolean, campgrounds: Array<{ __typename?: 'Campground', id: number, name: string, location: string, points: number, createdAt: any, updatedAt: any, creator: { __typename?: 'User', id: number, name: string, username: string } }> } };
 
 export type CurrentUserQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -305,6 +312,7 @@ export const CampgroundsDocument = gql`
       id
       name
       location
+      points
       createdAt
       updatedAt
       creator {

@@ -5,6 +5,7 @@ query Campgrounds($limit: Int!, $cursor: String) {
       id
       name
       location
+      points
       createdAt
       updatedAt
       creator {
