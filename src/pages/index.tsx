@@ -3,11 +3,12 @@ import { withUrqlClient } from "next-urql";
 import { useCampgroundsQuery } from "../generated/graphql";
 import { createUrqlClient } from "../utils/createUrqlClient";
 import NextLink from "next/link";
-import { Stack, Heading, Icon } from "@chakra-ui/react";
+import { Stack, Heading, IconButton } from "@chakra-ui/react";
 import { Layout } from "../components/Layout";
-import { Button, IconButton } from "@chakra-ui/button";
+import { Button } from "@chakra-ui/button";
 import { useState } from "react";
 import { ChevronDownIcon, ChevronUpIcon } from "@chakra-ui/icons";
+import { UpvoteSection } from "../components/UpvoteSection";
 
 const Index = () => {
   const [variables, setVariables] = useState({
@@ -40,31 +41,12 @@ const Index = () => {
             {data.campgrounds.campgrounds.map((camp) => (
               <Flex
                 p={5}
-                borderRadius={6}
-                shadow="md"
-                borderWidth="1px"
+                rounded="lg"
+                shadow="xl"
+                // borderWidth="1px"
                 key={camp.id}
               >
-                <Flex
-                  flexDirection="column"
-                  alignItems="center"
-                  justifyContent="space-around"
-                  mr={4}
-                >
-                  <IconButton
-                    aria-label="Upvote"
-                    fontSize="30px"
-                    icon={<ChevronUpIcon />}
-                  />
-                  <Text fontWeight="bold" mt={1}>
-                    {camp.points}
-                  </Text>
-                  <IconButton
-                    aria-label="Downvote"
-                    fontSize="30px"
-                    icon={<ChevronDownIcon />}
-                  />
-                </Flex>
+                <UpvoteSection camp={camp} />
                 <Box w="100%" py={3}>
                   <Flex justifyContent="space-between">
                     <Heading fontSize="lg"> {camp.name} </Heading>
