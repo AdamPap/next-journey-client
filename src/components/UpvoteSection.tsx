@@ -1,13 +1,18 @@
 import { ChevronUpIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import { Flex, IconButton, Text } from "@chakra-ui/react";
-import React from "react";
-import { CampgroundsQuery } from "../generated/graphql";
+import React, { useState } from "react";
+import { CampgroundsQuery, useVoteMutation } from "../generated/graphql";
 
 interface UpvoteSectionProps {
   camp: CampgroundsQuery["campgrounds"]["campgrounds"][0];
 }
 
 export const UpvoteSection: React.FC<UpvoteSectionProps> = ({ camp }) => {
+  const [loading, setLoading] = useState<
+    "upvote-loading" | "downvote-loading" | "not-loading"
+  >("not-loading");
+  const [, vote] = useVoteMutation();
+
   return (
     <Flex
       flexDirection="column"
@@ -18,8 +23,16 @@ export const UpvoteSection: React.FC<UpvoteSectionProps> = ({ camp }) => {
       <IconButton
         aria-label="Upvote"
         fontSize="30px"
-        // _hover={{ background: "cyan" }}
         icon={<ChevronUpIcon />}
+        isLoading={loading === "upvote-loading"}
+        onClick={async () => {
+          setLoading("upvote-loading");
+          await vote({
+            value: 1,
+            campgroundId: camp.id,
+          });
+          setLoading("not-loading");
+        }}
       />
       <Text fontWeight="bold" mb={2} mt={3}>
         {camp.points}
@@ -28,8 +41,16 @@ export const UpvoteSection: React.FC<UpvoteSectionProps> = ({ camp }) => {
         aria-label="Downvote"
         fontSize="30px"
         background="whiteAlpha.200"
-        // _hover={{ background: "cyan" }}
         icon={<ChevronDownIcon />}
+        isLoading={loading === "downvote-loading"}
+        onClick={async () => {
+          setLoading("downvote-loading");
+          await vote({
+            value: -1,
+            campgroundId: camp.id,
+          });
+          setLoading("not-loading");
+        }}
       />
     </Flex>
   );
