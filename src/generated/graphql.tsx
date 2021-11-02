@@ -26,6 +26,7 @@ export type Campground = {
   name: Scalars['String'];
   points: Scalars['Float'];
   updatedAt: Scalars['DateTime'];
+  voteStatus?: Maybe<Scalars['Int']>;
 };
 
 export type FieldError = {
@@ -207,7 +208,7 @@ export type CampgroundsQueryVariables = Exact<{
 }>;
 
 
-export type CampgroundsQuery = { __typename?: 'Query', campgrounds: { __typename?: 'PaginatedCampgrounds', hasMore: boolean, campgrounds: Array<{ __typename?: 'Campground', id: number, name: string, location: string, points: number, createdAt: any, updatedAt: any, creator: { __typename?: 'User', id: number, name: string, username: string } }> } };
+export type CampgroundsQuery = { __typename?: 'Query', campgrounds: { __typename?: 'PaginatedCampgrounds', hasMore: boolean, campgrounds: Array<{ __typename?: 'Campground', id: number, name: string, location: string, points: number, voteStatus?: number | null | undefined, createdAt: any, updatedAt: any, creator: { __typename?: 'User', id: number, name: string, username: string } }> } };
 
 export type CurrentUserQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -330,6 +331,7 @@ export const CampgroundsDocument = gql`
       name
       location
       points
+      voteStatus
       createdAt
       updatedAt
       creator {

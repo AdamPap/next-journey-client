@@ -25,7 +25,11 @@ export const UpvoteSection: React.FC<UpvoteSectionProps> = ({ camp }) => {
         fontSize="30px"
         icon={<ChevronUpIcon />}
         isLoading={loading === "upvote-loading"}
+        colorScheme={camp.voteStatus === 1 ? "teal" : undefined}
         onClick={async () => {
+          if (camp.voteStatus === 1) {
+            return;
+          }
           setLoading("upvote-loading");
           await vote({
             value: 1,
@@ -40,10 +44,13 @@ export const UpvoteSection: React.FC<UpvoteSectionProps> = ({ camp }) => {
       <IconButton
         aria-label="Downvote"
         fontSize="30px"
-        background="whiteAlpha.200"
         icon={<ChevronDownIcon />}
         isLoading={loading === "downvote-loading"}
+        colorScheme={camp.voteStatus === -1 ? "red" : undefined}
         onClick={async () => {
+          if (camp.voteStatus === -1) {
+            return;
+          }
           setLoading("downvote-loading");
           await vote({
             value: -1,
