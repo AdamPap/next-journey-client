@@ -1,10 +1,10 @@
 import { ChevronUpIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import { Flex, IconButton, Text } from "@chakra-ui/react";
 import React from "react";
-import { Campground } from "../generated/graphql";
+import { Campground, CampgroundsQuery } from "../generated/graphql";
 
 interface UpvoteSectionProps {
-  camp: Campground;
+  camp: CampgroundsQuery["campgrounds"]["campgrounds"][0];
 }
 
 export const UpvoteSection: React.FC<UpvoteSectionProps> = ({ camp }) => {
