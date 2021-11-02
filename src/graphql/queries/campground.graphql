@@ -1,0 +1,15 @@
+query Campground($id: Int!) {
+  campground(id: $id) {
+    name
+    location
+    points
+    createdAt
+    updatedAt
+    creatorId
+    voteStatus
+    creator {
+      id
+      username
+    }
+  }
+}

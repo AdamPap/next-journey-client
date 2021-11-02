@@ -2,16 +2,14 @@ import {
   dedupExchange,
   fetchExchange,
   gql,
-  ssrExchange,
   stringifyVariables,
 } from "@urql/core";
 import { cacheExchange, Resolver } from "@urql/exchange-graphcache";
-
 import {
-  LogoutMutation,
-  CurrentUserQuery,
   CurrentUserDocument,
+  CurrentUserQuery,
   LoginMutation,
+  LogoutMutation,
   RegisterMutation,
   VoteMutationVariables,
 } from "../generated/graphql";
@@ -43,12 +41,7 @@ export const cursorPagination = (): Resolver<any, any, any> => {
       "campgrounds"
     );
 
-    // console.log("Field name: ", fieldName);
-    // console.log("My field key: ", fieldKey);
-    // console.log("Is it in cache: ", isItInCache);
-
     info.partial = !isItInCache;
-    // console.log("info partial: ", info.partial);
 
     const results: string[] = [];
     let hasMore = true;

@@ -202,6 +202,13 @@ export type VoteMutationVariables = Exact<{
 
 export type VoteMutation = { __typename?: 'Mutation', vote: boolean };
 
+export type CampgroundQueryVariables = Exact<{
+  id: Scalars['Int'];
+}>;
+
+
+export type CampgroundQuery = { __typename?: 'Query', campground?: { __typename?: 'Campground', name: string, location: string, points: number, createdAt: any, updatedAt: any, creatorId: number, voteStatus?: number | null | undefined, creator: { __typename?: 'User', id: number, username: string } } | null | undefined };
+
 export type CampgroundsQueryVariables = Exact<{
   limit: Scalars['Int'];
   cursor?: Maybe<Scalars['String']>;
@@ -321,6 +328,27 @@ export const VoteDocument = gql`
 
 export function useVoteMutation() {
   return Urql.useMutation<VoteMutation, VoteMutationVariables>(VoteDocument);
+};
+export const CampgroundDocument = gql`
+    query Campground($id: Int!) {
+  campground(id: $id) {
+    name
+    location
+    points
+    createdAt
+    updatedAt
+    creatorId
+    voteStatus
+    creator {
+      id
+      username
+    }
+  }
+}
+    `;
+
+export function useCampgroundQuery(options: Omit<Urql.UseQueryArgs<CampgroundQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<CampgroundQuery>({ query: CampgroundDocument, ...options });
 };
 export const CampgroundsDocument = gql`
     query Campgrounds($limit: Int!, $cursor: String) {
