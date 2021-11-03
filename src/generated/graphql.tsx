@@ -208,7 +208,7 @@ export type UpdateCampgroundMutationVariables = Exact<{
 }>;
 
 
-export type UpdateCampgroundMutation = { __typename?: 'Mutation', updateCampground?: { __typename?: 'Campground', name: string, location: string, points: number, createdAt: any, updatedAt: any, creatorId: number, voteStatus?: number | null | undefined, creator: { __typename?: 'User', id: number, username: string } } | null | undefined };
+export type UpdateCampgroundMutation = { __typename?: 'Mutation', updateCampground?: { __typename?: 'Campground', id: number, name: string, location: string, points: number, createdAt: any, updatedAt: any, creatorId: number, voteStatus?: number | null | undefined } | null | undefined };
 
 export type VoteMutationVariables = Exact<{
   value: Scalars['Int'];
@@ -348,6 +348,7 @@ export function useRegisterMutation() {
 export const UpdateCampgroundDocument = gql`
     mutation UpdateCampground($id: Int!, $location: String!, $name: String!) {
   updateCampground(id: $id, location: $location, name: $name) {
+    id
     name
     location
     points
@@ -355,10 +356,6 @@ export const UpdateCampgroundDocument = gql`
     updatedAt
     creatorId
     voteStatus
-    creator {
-      id
-      username
-    }
   }
 }
     `;

@@ -1,5 +1,6 @@
 mutation UpdateCampground($id: Int!, $location: String!, $name: String!) {
   updateCampground(id: $id, location: $location, name: $name) {
+    id
     name
     location
     points
@@ -7,9 +8,5 @@ mutation UpdateCampground($id: Int!, $location: String!, $name: String!) {
     updatedAt
     creatorId
     voteStatus
-    creator {
-      id
-      username
-    }
   }
 }

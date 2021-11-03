@@ -2,10 +2,7 @@ import React from "react";
 import { createUrqlClient } from "../../utils/createUrqlClient";
 import { withUrqlClient } from "next-urql";
 import { useRouter } from "next/router";
-import {
-  useCampgroundQuery,
-  useCampgroundsQuery,
-} from "../../generated/graphql";
+import { useCampgroundQuery } from "../../generated/graphql";
 import { Layout } from "../../components/Layout";
 import { Box, Heading } from "@chakra-ui/layout";
 

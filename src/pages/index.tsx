@@ -109,7 +109,7 @@ const Index = () => {
                           </Text>
                           <Flex justifyContent="end">
                             {camp.creator.id === userData?.currentUser?.id && (
-                              <NextLink href={`/edit/${camp.id}`}>
+                              <NextLink href={`campground/edit/${camp.id}`}>
                                 <Button colorScheme="teal" px={2}>
                                   <EditIcon />
                                 </Button>
