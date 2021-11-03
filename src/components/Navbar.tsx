@@ -1,6 +1,6 @@
-import { Box, Flex } from "@chakra-ui/layout";
+import { Box, Flex, Heading, Link } from "@chakra-ui/layout";
 import React from "react";
-import Link from "next/link";
+import NextLink from "next/link";
 import { useCurrentUserQuery, useLogoutMutation } from "../generated/graphql";
 import { Button } from "@chakra-ui/button";
 import { isServer } from "../utils/isServer";
@@ -21,8 +21,17 @@ export const Navbar: React.FC<NavbarProps> = ({}) => {
     ? (body = null)
     : data?.currentUser
     ? (body = (
-        <Flex justifyContent="space-between" width="full">
-          <Link href="/">Home</Link>
+        <Flex
+          p={2}
+          justifyContent="space-between"
+          alignItems="center"
+          width="full"
+        >
+          <NextLink href="/">
+            <Link mb={-2} style={{ textDecoration: "none" }}>
+              <Heading>NextJourney</Heading>
+            </Link>
+          </NextLink>
           <Flex justifyContent="right">
             <Box>{data?.currentUser?.name}</Box>
             <Button
