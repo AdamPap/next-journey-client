@@ -166,7 +166,7 @@ export type CreateCampgroundMutationVariables = Exact<{
 export type CreateCampgroundMutation = { __typename?: 'Mutation', createCampground: { __typename?: 'Campground', id: number, name: string, location: string } };
 
 export type DeleteCampgroundMutationVariables = Exact<{
-  deleteCampgroundId: Scalars['Int'];
+  id: Scalars['Int'];
 }>;
 
 
@@ -274,8 +274,8 @@ export function useCreateCampgroundMutation() {
   return Urql.useMutation<CreateCampgroundMutation, CreateCampgroundMutationVariables>(CreateCampgroundDocument);
 };
 export const DeleteCampgroundDocument = gql`
-    mutation DeleteCampground($deleteCampgroundId: Int!) {
-  deleteCampground(id: $deleteCampgroundId)
+    mutation DeleteCampground($id: Int!) {
+  deleteCampground(id: $id)
 }
     `;
 

@@ -1,13 +1,17 @@
 import { Box, Flex, Link, Text } from "@chakra-ui/layout";
 import { withUrqlClient } from "next-urql";
-import { useCampgroundsQuery, useCurrentUserQuery } from "../generated/graphql";
+import {
+  useCampgroundsQuery,
+  useCurrentUserQuery,
+  useDeleteCampgroundMutation,
+} from "../generated/graphql";
 import { createUrqlClient } from "../utils/createUrqlClient";
 import NextLink from "next/link";
 import { Stack, Heading, IconButton } from "@chakra-ui/react";
 import { Layout } from "../components/Layout";
 import { Button } from "@chakra-ui/button";
 import { useState } from "react";
-import { ChevronDownIcon, ChevronUpIcon } from "@chakra-ui/icons";
+import { ChevronDownIcon, ChevronUpIcon, DeleteIcon } from "@chakra-ui/icons";
 import { UpvoteSection } from "../components/UpvoteSection";
 import { isServer } from "../utils/isServer";
 
@@ -27,6 +31,8 @@ const Index = () => {
     // SEO
     pause: isServer(),
   });
+
+  const [, deleteCampground] = useDeleteCampgroundMutation();
 
   if (!fetching && !data) {
     return <div>There are no campgrounds</div>;
@@ -93,9 +99,13 @@ const Index = () => {
                             : camp.creator.username}
                         </Text>
                         {camp.creator.id === userData?.currentUser?.id && (
-                          <Button colorScheme="red" ml="auto">
-                            Delete
-                          </Button>
+                          <IconButton
+                            aria-label="Delete campground"
+                            icon={<DeleteIcon />}
+                            colorScheme="red"
+                            ml="auto"
+                            onClick={() => deleteCampground({ id: camp.id })}
+                          />
                         )}
                       </Flex>
                     </Box>
