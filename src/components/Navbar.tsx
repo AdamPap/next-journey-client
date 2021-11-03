@@ -21,16 +21,19 @@ export const Navbar: React.FC<NavbarProps> = ({}) => {
     ? (body = null)
     : data?.currentUser
     ? (body = (
-        <Flex justifyContent="right">
-          <Box>{data?.currentUser?.name}</Box>
-          <Button
-            isLoading={logoutFetching}
-            onClick={() => logout()}
-            ml={2}
-            variant="link"
-          >
-            Logout
-          </Button>
+        <Flex justifyContent="space-between" width="full">
+          <Link href="/">Home</Link>
+          <Flex justifyContent="right">
+            <Box>{data?.currentUser?.name}</Box>
+            <Button
+              isLoading={logoutFetching}
+              onClick={() => logout()}
+              ml={2}
+              variant="link"
+            >
+              Logout
+            </Button>
+          </Flex>
         </Flex>
       ))
     : (body = (
