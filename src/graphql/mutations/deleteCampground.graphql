@@ -1,0 +1,3 @@
+mutation DeleteCampground($deleteCampgroundId: Int!) {
+  deleteCampground(id: $deleteCampgroundId)
+}

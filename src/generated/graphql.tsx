@@ -165,6 +165,13 @@ export type CreateCampgroundMutationVariables = Exact<{
 
 export type CreateCampgroundMutation = { __typename?: 'Mutation', createCampground: { __typename?: 'Campground', id: number, name: string, location: string } };
 
+export type DeleteCampgroundMutationVariables = Exact<{
+  deleteCampgroundId: Scalars['Int'];
+}>;
+
+
+export type DeleteCampgroundMutation = { __typename?: 'Mutation', deleteCampground: boolean };
+
 export type ForgotPasswordMutationVariables = Exact<{
   email: Scalars['String'];
 }>;
@@ -265,6 +272,15 @@ export const CreateCampgroundDocument = gql`
 
 export function useCreateCampgroundMutation() {
   return Urql.useMutation<CreateCampgroundMutation, CreateCampgroundMutationVariables>(CreateCampgroundDocument);
+};
+export const DeleteCampgroundDocument = gql`
+    mutation DeleteCampground($deleteCampgroundId: Int!) {
+  deleteCampground(id: $deleteCampgroundId)
+}
+    `;
+
+export function useDeleteCampgroundMutation() {
+  return Urql.useMutation<DeleteCampgroundMutation, DeleteCampgroundMutationVariables>(DeleteCampgroundDocument);
 };
 export const ForgotPasswordDocument = gql`
     mutation ForgotPassword($email: String!) {
