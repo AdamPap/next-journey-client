@@ -58,61 +58,63 @@ const Index = () => {
       <Box px={5}>
         {data && !fetching ? (
           <Stack spacing={8}>
-            {data.campgrounds.campgrounds.map((camp) => (
-              <Flex
-                p={5}
-                rounded="lg"
-                shadow="xl"
-                // borderWidth="1px"
-                key={camp.id}
-              >
-                <UpvoteSection camp={camp} />
-                <Box w="100%" py={3}>
-                  <Flex justifyContent="space-between" height="full">
-                    <Box>
-                      <NextLink
-                        href="campground/[id]"
-                        as={`/campground/${camp.id}`}
-                      >
-                        <Link>
-                          <Heading fontSize="lg"> {camp.name} </Heading>
-                        </Link>
-                      </NextLink>
-                      <Text mt={4}>{camp.location}</Text>
-                    </Box>
-                    <Box>
-                      <Flex
-                        height="full"
-                        flexDirection="column"
-                        justifyContent="space-between"
-                      >
-                        <Text
-                          color={
-                            camp.creator.id === userData?.currentUser?.id
-                              ? `teal`
-                              : "black"
-                          }
+            {data.campgrounds.campgrounds.map((camp) =>
+              !camp ? null : (
+                <Flex
+                  p={5}
+                  rounded="lg"
+                  shadow="xl"
+                  // borderWidth="1px"
+                  key={camp.id}
+                >
+                  <UpvoteSection camp={camp} />
+                  <Box w="100%" py={3}>
+                    <Flex justifyContent="space-between" height="full">
+                      <Box>
+                        <NextLink
+                          href="campground/[id]"
+                          as={`/campground/${camp.id}`}
                         >
-                          Posted by{" "}
-                          {camp.creator.id === userData?.currentUser?.id
-                            ? "you"
-                            : camp.creator.username}
-                        </Text>
-                        {camp.creator.id === userData?.currentUser?.id && (
-                          <IconButton
-                            aria-label="Delete campground"
-                            icon={<DeleteIcon />}
-                            colorScheme="red"
-                            ml="auto"
-                            onClick={() => deleteCampground({ id: camp.id })}
-                          />
-                        )}
-                      </Flex>
-                    </Box>
-                  </Flex>
-                </Box>
-              </Flex>
-            ))}
+                          <Link>
+                            <Heading fontSize="lg"> {camp.name} </Heading>
+                          </Link>
+                        </NextLink>
+                        <Text mt={4}>{camp.location}</Text>
+                      </Box>
+                      <Box>
+                        <Flex
+                          height="full"
+                          flexDirection="column"
+                          justifyContent="space-between"
+                        >
+                          <Text
+                            color={
+                              camp.creator.id === userData?.currentUser?.id
+                                ? `teal`
+                                : "black"
+                            }
+                          >
+                            Posted by{" "}
+                            {camp.creator.id === userData?.currentUser?.id
+                              ? "you"
+                              : camp.creator.username}
+                          </Text>
+                          {camp.creator.id === userData?.currentUser?.id && (
+                            <IconButton
+                              aria-label="Delete campground"
+                              icon={<DeleteIcon />}
+                              colorScheme="red"
+                              ml="auto"
+                              onClick={() => deleteCampground({ id: camp.id })}
+                            />
+                          )}
+                        </Flex>
+                      </Box>
+                    </Flex>
+                  </Box>
+                </Flex>
+              )
+            )}
           </Stack>
         ) : (
           <div>...loading</div>

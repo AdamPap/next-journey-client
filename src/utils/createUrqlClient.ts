@@ -8,6 +8,7 @@ import { cacheExchange, Resolver } from "@urql/exchange-graphcache";
 import {
   CurrentUserDocument,
   CurrentUserQuery,
+  DeleteCampgroundMutationVariables,
   LoginMutation,
   LogoutMutation,
   RegisterMutation,
@@ -90,6 +91,12 @@ export const createUrqlClient = (ssrExchange: any, ctx: any) => {
         },
         updates: {
           Mutation: {
+            deleteCampground: (_result, args, cache, info) => {
+              cache.invalidate({
+                __typename: "Campground",
+                id: (args as DeleteCampgroundMutationVariables).id,
+              });
+            },
             vote: (_result, args, cache, info) => {
               const { campgroundId, value } = args as VoteMutationVariables;
 
