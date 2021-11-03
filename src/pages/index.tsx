@@ -49,7 +49,14 @@ const Index = () => {
                 <UpvoteSection camp={camp} />
                 <Box w="100%" py={3}>
                   <Flex justifyContent="space-between">
-                    <Heading fontSize="lg"> {camp.name} </Heading>
+                    <NextLink
+                      href="campground/[id]"
+                      as={`/campground/${camp.id}`}
+                    >
+                      <Link>
+                        <Heading fontSize="lg"> {camp.name} </Heading>
+                      </Link>
+                    </NextLink>
                     <Text>Posted by {camp.creator.username}</Text>
                   </Flex>
                   <Text mt={4}>{camp.location}</Text>
