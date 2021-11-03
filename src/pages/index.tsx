@@ -11,7 +11,12 @@ import { Stack, Heading, IconButton } from "@chakra-ui/react";
 import { Layout } from "../components/Layout";
 import { Button } from "@chakra-ui/button";
 import { useState } from "react";
-import { ChevronDownIcon, ChevronUpIcon, DeleteIcon } from "@chakra-ui/icons";
+import {
+  ChevronDownIcon,
+  ChevronUpIcon,
+  DeleteIcon,
+  EditIcon,
+} from "@chakra-ui/icons";
 import { UpvoteSection } from "../components/UpvoteSection";
 import { isServer } from "../utils/isServer";
 
@@ -102,15 +107,26 @@ const Index = () => {
                               ? "you"
                               : camp.creator.username}
                           </Text>
-                          {camp.creator.id === userData?.currentUser?.id && (
-                            <IconButton
-                              aria-label="Delete campground"
-                              icon={<DeleteIcon />}
-                              colorScheme="red"
-                              ml="auto"
-                              onClick={() => deleteCampground({ id: camp.id })}
-                            />
-                          )}
+                          <Flex justifyContent="end">
+                            {camp.creator.id === userData?.currentUser?.id && (
+                              <NextLink href={`/edit/${camp.id}`}>
+                                <Button colorScheme="teal" px={2}>
+                                  <EditIcon />
+                                </Button>
+                              </NextLink>
+                            )}
+                            {camp.creator.id === userData?.currentUser?.id && (
+                              <IconButton
+                                aria-label="Delete campground"
+                                icon={<DeleteIcon />}
+                                colorScheme="red"
+                                ml={2}
+                                onClick={() =>
+                                  deleteCampground({ id: camp.id })
+                                }
+                              />
+                            )}
+                          </Flex>
                         </Flex>
                       </Box>
                     </Flex>
