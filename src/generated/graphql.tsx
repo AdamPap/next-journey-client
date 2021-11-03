@@ -201,6 +201,15 @@ export type RegisterMutationVariables = Exact<{
 
 export type RegisterMutation = { __typename?: 'Mutation', register: { __typename?: 'UserResponse', errors?: Array<{ __typename?: 'FieldError', field: string, message: string }> | null | undefined, user?: { __typename?: 'User', id: number, username: string, name: string, email: string } | null | undefined } };
 
+export type UpdateCampgroundMutationVariables = Exact<{
+  id: Scalars['Int'];
+  location: Scalars['String'];
+  name: Scalars['String'];
+}>;
+
+
+export type UpdateCampgroundMutation = { __typename?: 'Mutation', updateCampground?: { __typename?: 'Campground', name: string, location: string, points: number, createdAt: any, updatedAt: any, creatorId: number, voteStatus?: number | null | undefined, creator: { __typename?: 'User', id: number, username: string } } | null | undefined };
+
 export type VoteMutationVariables = Exact<{
   value: Scalars['Int'];
   campgroundId: Scalars['Int'];
@@ -335,6 +344,27 @@ ${RegularUserFragmentDoc}`;
 
 export function useRegisterMutation() {
   return Urql.useMutation<RegisterMutation, RegisterMutationVariables>(RegisterDocument);
+};
+export const UpdateCampgroundDocument = gql`
+    mutation UpdateCampground($id: Int!, $location: String!, $name: String!) {
+  updateCampground(id: $id, location: $location, name: $name) {
+    name
+    location
+    points
+    createdAt
+    updatedAt
+    creatorId
+    voteStatus
+    creator {
+      id
+      username
+    }
+  }
+}
+    `;
+
+export function useUpdateCampgroundMutation() {
+  return Urql.useMutation<UpdateCampgroundMutation, UpdateCampgroundMutationVariables>(UpdateCampgroundDocument);
 };
 export const VoteDocument = gql`
     mutation Vote($value: Int!, $campgroundId: Int!) {

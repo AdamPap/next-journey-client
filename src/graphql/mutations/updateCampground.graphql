@@ -1,0 +1,15 @@
+mutation UpdateCampground($id: Int!, $location: String!, $name: String!) {
+  updateCampground(id: $id, location: $location, name: $name) {
+    name
+    location
+    points
+    createdAt
+    updatedAt
+    creatorId
+    voteStatus
+    creator {
+      id
+      username
+    }
+  }
+}

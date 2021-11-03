@@ -59,6 +59,9 @@ const Index = () => {
         {data && !fetching ? (
           <Stack spacing={8}>
             {data.campgrounds.campgrounds.map((camp) =>
+              /*NOTE: this prevents error when deleted campgrounds
+                      are in cache
+              */
               !camp ? null : (
                 <Flex
                   p={5}
