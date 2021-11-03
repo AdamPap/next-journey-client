@@ -80,7 +80,18 @@ const Index = () => {
                         flexDirection="column"
                         justifyContent="space-between"
                       >
-                        <Text>Posted by {camp.creator.username}</Text>
+                        <Text
+                          color={
+                            camp.creator.id === userData?.currentUser?.id
+                              ? `teal`
+                              : "black"
+                          }
+                        >
+                          Posted by{" "}
+                          {camp.creator.id === userData?.currentUser?.id
+                            ? "you"
+                            : camp.creator.username}
+                        </Text>
                         {camp.creator.id === userData?.currentUser?.id && (
                           <Button colorScheme="red" ml="auto">
                             Delete
