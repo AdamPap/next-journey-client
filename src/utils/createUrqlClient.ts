@@ -4,7 +4,7 @@ import {
   gql,
   stringifyVariables,
 } from "@urql/core";
-import { cacheExchange, Resolver } from "@urql/exchange-graphcache";
+import { cacheExchange, Resolver, Cache } from "@urql/exchange-graphcache";
 import {
   CurrentUserDocument,
   CurrentUserQuery,
@@ -64,6 +64,19 @@ export const cursorPagination = (): Resolver<any, any, any> => {
       campgrounds: results,
     };
   };
+};
+
+const invalidateAllCampgrounds = (cache: Cache) => {
+  const allFields = cache.inspectFields("Query");
+  const fieldInfos = allFields.filter(
+    (info) => info.fieldName === "campgrounds"
+  );
+
+  fieldInfos.forEach((fi) => {
+    // NOTE: value of limit has to match pagination query
+    // on index page
+    cache.invalidate("Query", "campgrounds", fi.arguments || {});
+  });
 };
 
 export const createUrqlClient = (ssrExchange: any, ctx: any) => {
@@ -132,16 +145,7 @@ export const createUrqlClient = (ssrExchange: any, ctx: any) => {
               }
             },
             createCampground: (_result, args, cache, info) => {
-              const allFields = cache.inspectFields("Query");
-              const fieldInfos = allFields.filter(
-                (info) => info.fieldName === "campgrounds"
-              );
-
-              fieldInfos.forEach((fi) => {
-                // NOTE: value of limit has to match pagination query
-                // on index page
-                cache.invalidate("Query", "campgrounds", fi.arguments || {});
-              });
+              invalidateAllCampgrounds(cache);
             },
             logout: (_result, args, cache, info) => {
               betterUpdateQuery<LogoutMutation, CurrentUserQuery>(
@@ -166,6 +170,7 @@ export const createUrqlClient = (ssrExchange: any, ctx: any) => {
                   }
                 }
               );
+              // invalidateAllCampgrounds(cache);
             },
             register: (_result, args, cache, info) => {
               betterUpdateQuery<RegisterMutation, CurrentUserQuery>(
