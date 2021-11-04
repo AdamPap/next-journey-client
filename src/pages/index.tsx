@@ -1,23 +1,19 @@
+import { Button } from "@chakra-ui/button";
+import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import { Box, Flex, Link, Text } from "@chakra-ui/layout";
+import { Heading, IconButton, Stack } from "@chakra-ui/react";
 import { withUrqlClient } from "next-urql";
+import NextLink from "next/link";
+import { useState } from "react";
+import { EditDeleteCampgroundButtons } from "../components/EditDeleteCampgroundButtons";
+import { Layout } from "../components/Layout";
+import { UpvoteSection } from "../components/UpvoteSection";
 import {
   useCampgroundsQuery,
   useCurrentUserQuery,
   useDeleteCampgroundMutation,
 } from "../generated/graphql";
 import { createUrqlClient } from "../utils/createUrqlClient";
-import NextLink from "next/link";
-import { Stack, Heading, IconButton } from "@chakra-ui/react";
-import { Layout } from "../components/Layout";
-import { Button } from "@chakra-ui/button";
-import { useState } from "react";
-import {
-  ChevronDownIcon,
-  ChevronUpIcon,
-  DeleteIcon,
-  EditIcon,
-} from "@chakra-ui/icons";
-import { UpvoteSection } from "../components/UpvoteSection";
 import { isServer } from "../utils/isServer";
 
 const Index = () => {
@@ -36,8 +32,6 @@ const Index = () => {
     // SEO
     pause: isServer(),
   });
-
-  const [, deleteCampground] = useDeleteCampgroundMutation();
 
   if (!fetching && !data) {
     return <div>There are no campgrounds</div>;
@@ -107,29 +101,9 @@ const Index = () => {
                               ? "you"
                               : camp.creator.username}
                           </Text>
-                          <Flex justifyContent="end">
-                            {camp.creator.id === userData?.currentUser?.id && (
-                              <NextLink
-                                href={"campground/edit/[id]"}
-                                as={`campground/edit/${camp.id}`}
-                              >
-                                <Button colorScheme="teal" px={2}>
-                                  <EditIcon />
-                                </Button>
-                              </NextLink>
-                            )}
-                            {camp.creator.id === userData?.currentUser?.id && (
-                              <IconButton
-                                aria-label="Delete campground"
-                                icon={<DeleteIcon />}
-                                colorScheme="red"
-                                ml={2}
-                                onClick={() =>
-                                  deleteCampground({ id: camp.id })
-                                }
-                              />
-                            )}
-                          </Flex>
+                          {camp.creator.id === userData?.currentUser?.id && (
+                            <EditDeleteCampgroundButtons id={camp.id} />
+                          )}
                         </Flex>
                       </Box>
                     </Flex>
