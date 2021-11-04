@@ -5,6 +5,7 @@ import { Heading, IconButton, Stack } from "@chakra-ui/react";
 import { withUrqlClient } from "next-urql";
 import NextLink from "next/link";
 import { useState } from "react";
+import { CampgroundCard } from "../components/CampgroundCard";
 import { EditDeleteCampgroundButtons } from "../components/EditDeleteCampgroundButtons";
 import { Layout } from "../components/Layout";
 import { UpvoteSection } from "../components/UpvoteSection";
@@ -61,55 +62,7 @@ const Index = () => {
               /*NOTE: this prevents error when deleted campgrounds
                       are in cache
               */
-              !camp ? null : (
-                <Flex
-                  p={5}
-                  rounded="lg"
-                  shadow="xl"
-                  // borderWidth="1px"
-                  key={camp.id}
-                >
-                  <UpvoteSection camp={camp} />
-                  <Box w="100%" py={3}>
-                    <Flex justifyContent="space-between" height="full">
-                      <Box>
-                        <NextLink
-                          href="campground/[id]"
-                          as={`/campground/${camp.id}`}
-                        >
-                          <Link>
-                            <Heading fontSize="lg"> {camp.name} </Heading>
-                          </Link>
-                        </NextLink>
-                        <Text mt={4}>{camp.location}</Text>
-                      </Box>
-                      <Box>
-                        <Flex
-                          height="full"
-                          flexDirection="column"
-                          justifyContent="space-between"
-                        >
-                          <Text
-                            color={
-                              camp.creator.id === userData?.currentUser?.id
-                                ? `teal`
-                                : "black"
-                            }
-                          >
-                            Posted by{" "}
-                            {camp.creator.id === userData?.currentUser?.id
-                              ? "you"
-                              : camp.creator.username}
-                          </Text>
-                          {camp.creator.id === userData?.currentUser?.id && (
-                            <EditDeleteCampgroundButtons id={camp.id} />
-                          )}
-                        </Flex>
-                      </Box>
-                    </Flex>
-                  </Box>
-                </Flex>
-              )
+              !camp ? null : <CampgroundCard camp={camp} userData={userData} />
             )}
           </Stack>
         ) : (
