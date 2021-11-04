@@ -95,4 +95,4 @@ const EditCampground: React.FC<EditCampgroundProps> = ({}) => {
   );
 };
 
-export default withUrqlClient(createUrqlClient, { ssr: true })(EditCampground);
+export default withUrqlClient(createUrqlClient)(EditCampground);
