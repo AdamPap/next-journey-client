@@ -208,7 +208,7 @@ export type UpdateCampgroundMutationVariables = Exact<{
 }>;
 
 
-export type UpdateCampgroundMutation = { __typename?: 'Mutation', updateCampground?: { __typename?: 'Campground', id: number, name: string, location: string, points: number, createdAt: any, updatedAt: any, creatorId: number, voteStatus?: number | null | undefined } | null | undefined };
+export type UpdateCampgroundMutation = { __typename?: 'Mutation', updateCampground?: { __typename?: 'Campground', id: number, name: string, location: string } | null | undefined };
 
 export type VoteMutationVariables = Exact<{
   value: Scalars['Int'];
@@ -223,7 +223,7 @@ export type CampgroundQueryVariables = Exact<{
 }>;
 
 
-export type CampgroundQuery = { __typename?: 'Query', campground?: { __typename?: 'Campground', name: string, location: string, points: number, createdAt: any, updatedAt: any, creatorId: number, voteStatus?: number | null | undefined, creator: { __typename?: 'User', id: number, username: string } } | null | undefined };
+export type CampgroundQuery = { __typename?: 'Query', campground?: { __typename?: 'Campground', id: number, name: string, location: string, points: number, createdAt: any, updatedAt: any, creatorId: number, voteStatus?: number | null | undefined, creator: { __typename?: 'User', id: number, username: string } } | null | undefined };
 
 export type CampgroundsQueryVariables = Exact<{
   limit: Scalars['Int'];
@@ -351,11 +351,6 @@ export const UpdateCampgroundDocument = gql`
     id
     name
     location
-    points
-    createdAt
-    updatedAt
-    creatorId
-    voteStatus
   }
 }
     `;
@@ -375,6 +370,7 @@ export function useVoteMutation() {
 export const CampgroundDocument = gql`
     query Campground($id: Int!) {
   campground(id: $id) {
+    id
     name
     location
     points

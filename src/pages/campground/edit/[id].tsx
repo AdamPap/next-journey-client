@@ -16,8 +16,6 @@ interface EditCampgroundProps {}
 const EditCampground: React.FC<EditCampgroundProps> = ({}) => {
   const router = useRouter();
 
-  const [, updateCampground] = useUpdateCampgroundMutation();
-
   const intId =
     typeof router.query.id === "string" ? parseInt(router.query.id) : -1;
 
@@ -28,6 +26,8 @@ const EditCampground: React.FC<EditCampgroundProps> = ({}) => {
         id: intId,
       },
     });
+
+  const [, updateCampground] = useUpdateCampgroundMutation();
 
   if (campFetching) {
     return (
@@ -60,8 +60,8 @@ const EditCampground: React.FC<EditCampgroundProps> = ({}) => {
           if (error?.message.includes("Not authenticated")) {
             router.push("/login");
           } else {
-            router.push(`/campground/${intId}`);
-            // router.back();
+            // router.push(`/campground/${intId}`);
+            router.back();
           }
         }}
       >
@@ -95,4 +95,4 @@ const EditCampground: React.FC<EditCampgroundProps> = ({}) => {
   );
 };
 
-export default withUrqlClient(createUrqlClient)(EditCampground);
+export default withUrqlClient(createUrqlClient, { ssr: true })(EditCampground);

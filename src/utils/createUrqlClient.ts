@@ -12,6 +12,7 @@ import {
   LoginMutation,
   LogoutMutation,
   RegisterMutation,
+  UpdateCampgroundMutationVariables,
   VoteMutationVariables,
 } from "../generated/graphql";
 import { betterUpdateQuery } from "./betterUpdateQuery";
@@ -68,6 +69,7 @@ export const cursorPagination = (): Resolver<any, any, any> => {
 export const createUrqlClient = (ssrExchange: any, ctx: any) => {
   let cookie = "";
   if (isServer()) {
+    console.log(ctx);
     cookie = ctx.req.headers.cookie;
   }
 
@@ -110,8 +112,6 @@ export const createUrqlClient = (ssrExchange: any, ctx: any) => {
                 `,
                 { id: campgroundId }
               );
-
-              console.log("DATA: ", data);
 
               if (data) {
                 if (data.voteStatus === value) {

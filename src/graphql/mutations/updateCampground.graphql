@@ -3,10 +3,5 @@ mutation UpdateCampground($id: Int!, $location: String!, $name: String!) {
     id
     name
     location
-    points
-    createdAt
-    updatedAt
-    creatorId
-    voteStatus
   }
 }
