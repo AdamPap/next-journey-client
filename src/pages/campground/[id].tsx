@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import { useCampgroundQuery } from "../../generated/graphql";
 import { Layout } from "../../components/Layout";
 import { Box, Heading } from "@chakra-ui/layout";
+import { EditDeleteCampgroundButtons } from "../../components/EditDeleteCampgroundButtons";
 
 const Campground: React.FC = ({}) => {
   const router = useRouter();
@@ -38,6 +39,7 @@ const Campground: React.FC = ({}) => {
       <Heading>{data?.campground?.name}</Heading>
       <Box>{data?.campground?.location}</Box>
       <Box>Points: {data.campground.points}</Box>
+      <EditDeleteCampgroundButtons id={data.campground.id} />
     </Layout>
   );
 };

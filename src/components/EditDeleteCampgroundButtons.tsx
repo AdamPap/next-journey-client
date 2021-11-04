@@ -1,13 +1,8 @@
-import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
-import { Flex, Button, IconButton } from "@chakra-ui/react";
-import React from "react";
-import {
-  Campground,
-  useCurrentUserQuery,
-  useDeleteCampgroundMutation,
-} from "../generated/graphql";
+import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
+import { Button, Flex, IconButton } from "@chakra-ui/react";
 import NextLink from "next/link";
-import { isServer } from "../utils/isServer";
+import React from "react";
+import { useDeleteCampgroundMutation } from "../generated/graphql";
 
 interface EditDeleteCampgroundButtonsProps {
   id: number;
@@ -19,7 +14,7 @@ export const EditDeleteCampgroundButtons: React.FC<EditDeleteCampgroundButtonsPr
 
     return (
       <Flex justifyContent="end">
-        <NextLink href={"campground/edit/[id]"} as={`campground/edit/${id}`}>
+        <NextLink href={"/campground/edit/[id]"} as={`/campground/edit/${id}`}>
           <Button colorScheme="teal" px={2}>
             <EditIcon />
           </Button>
