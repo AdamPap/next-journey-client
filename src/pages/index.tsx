@@ -34,9 +34,10 @@ const Index = () => {
     pause: isServer(),
   });
 
-  if (!fetching && !data) {
-    return <div>There are no campgrounds</div>;
-  }
+  // TODO:
+  // if (!fetching && !data) {
+  //   return <div>There are no campgrounds</div>;
+  // }
 
   return (
     <Layout>
