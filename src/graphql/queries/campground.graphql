@@ -3,6 +3,7 @@ query Campground($id: Int!) {
     id
     name
     location
+    image
     points
     createdAt
     updatedAt

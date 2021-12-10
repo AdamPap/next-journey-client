@@ -26,11 +26,12 @@ const CreateCampground: React.FC<{}> = ({}) => {
   return (
     <Layout variant="small">
       <Formik
-        initialValues={{ name: "", location: "" }}
+        initialValues={{ name: "", location: "", image: "" }}
         onSubmit={async (values) => {
           const { error } = await createCampground({
             name: values.name,
             location: values.location,
+            image: values.image,
           });
 
           if (error?.message.includes("Not authenticated")) {

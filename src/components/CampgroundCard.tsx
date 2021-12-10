@@ -5,6 +5,7 @@ import React from "react";
 import { CampgroundsQuery, CurrentUserQuery } from "../generated/graphql";
 import { EditDeleteCampgroundButtons } from "./EditDeleteCampgroundButtons";
 import { UpvoteSection } from "./UpvoteSection";
+import NextImage from "next/image";
 
 interface CampgroundCardProps {
   camp: CampgroundsQuery["campgrounds"]["campgrounds"][0];
@@ -33,6 +34,15 @@ export const CampgroundCard: React.FC<CampgroundCardProps> = ({
               </Link>
             </NextLink>
             <Text mt={4}>{camp.location}</Text>
+            <Box position="relative" width="100%" height="100%">
+              <NextImage
+                src={camp.image}
+                layout="intrinsic"
+                objectFit="contain"
+                width={1500}
+                height={1000}
+              />
+            </Box>
           </Box>
           <Box>
             <Flex
@@ -52,6 +62,7 @@ export const CampgroundCard: React.FC<CampgroundCardProps> = ({
                   ? "you"
                   : camp.creator.username}
               </Text>
+
               {camp.creator.id === userData?.currentUser?.id && (
                 <EditDeleteCampgroundButtons id={camp.id} />
               )}

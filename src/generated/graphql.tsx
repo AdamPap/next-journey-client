@@ -22,6 +22,7 @@ export type Campground = {
   creator: User;
   creatorId: Scalars['Float'];
   id: Scalars['Float'];
+  image: Scalars['String'];
   location: Scalars['String'];
   name: Scalars['String'];
   points: Scalars['Float'];
@@ -61,6 +62,7 @@ export type MutationChangePasswordArgs = {
 
 
 export type MutationCreateCampgroundArgs = {
+  image: Scalars['String'];
   location: Scalars['String'];
   name: Scalars['String'];
 };
@@ -160,10 +162,11 @@ export type ChangePasswordMutation = { __typename?: 'Mutation', changePassword: 
 export type CreateCampgroundMutationVariables = Exact<{
   name: Scalars['String'];
   location: Scalars['String'];
+  image: Scalars['String'];
 }>;
 
 
-export type CreateCampgroundMutation = { __typename?: 'Mutation', createCampground: { __typename?: 'Campground', id: number, name: string, location: string } };
+export type CreateCampgroundMutation = { __typename?: 'Mutation', createCampground: { __typename?: 'Campground', id: number, name: string, location: string, image: string } };
 
 export type DeleteCampgroundMutationVariables = Exact<{
   id: Scalars['Int'];
@@ -223,7 +226,7 @@ export type CampgroundQueryVariables = Exact<{
 }>;
 
 
-export type CampgroundQuery = { __typename?: 'Query', campground?: { __typename?: 'Campground', id: number, name: string, location: string, points: number, createdAt: any, updatedAt: any, creatorId: number, voteStatus?: number | null | undefined, creator: { __typename?: 'User', id: number, username: string } } | null | undefined };
+export type CampgroundQuery = { __typename?: 'Query', campground?: { __typename?: 'Campground', id: number, name: string, location: string, image: string, points: number, createdAt: any, updatedAt: any, creatorId: number, voteStatus?: number | null | undefined, creator: { __typename?: 'User', id: number, username: string } } | null | undefined };
 
 export type CampgroundsQueryVariables = Exact<{
   limit: Scalars['Int'];
@@ -231,7 +234,7 @@ export type CampgroundsQueryVariables = Exact<{
 }>;
 
 
-export type CampgroundsQuery = { __typename?: 'Query', campgrounds: { __typename?: 'PaginatedCampgrounds', hasMore: boolean, campgrounds: Array<{ __typename?: 'Campground', id: number, name: string, location: string, points: number, voteStatus?: number | null | undefined, creatorId: number, createdAt: any, updatedAt: any, creator: { __typename?: 'User', id: number, name: string, username: string } }> } };
+export type CampgroundsQuery = { __typename?: 'Query', campgrounds: { __typename?: 'PaginatedCampgrounds', hasMore: boolean, campgrounds: Array<{ __typename?: 'Campground', id: number, name: string, location: string, image: string, points: number, voteStatus?: number | null | undefined, creatorId: number, createdAt: any, updatedAt: any, creator: { __typename?: 'User', id: number, name: string, username: string } }> } };
 
 export type CurrentUserQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -270,11 +273,12 @@ export function useChangePasswordMutation() {
   return Urql.useMutation<ChangePasswordMutation, ChangePasswordMutationVariables>(ChangePasswordDocument);
 };
 export const CreateCampgroundDocument = gql`
-    mutation CreateCampground($name: String!, $location: String!) {
-  createCampground(name: $name, location: $location) {
+    mutation CreateCampground($name: String!, $location: String!, $image: String!) {
+  createCampground(name: $name, location: $location, image: $image) {
     id
     name
     location
+    image
   }
 }
     `;
@@ -373,6 +377,7 @@ export const CampgroundDocument = gql`
     id
     name
     location
+    image
     points
     createdAt
     updatedAt
@@ -397,6 +402,7 @@ export const CampgroundsDocument = gql`
       id
       name
       location
+      image
       points
       voteStatus
       creatorId

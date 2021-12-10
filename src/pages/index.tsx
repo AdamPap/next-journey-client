@@ -63,7 +63,9 @@ const Index = () => {
               /*NOTE: this prevents error when deleted campgrounds
                       are in cache
               */
-              !camp ? null : <CampgroundCard camp={camp} userData={userData} />
+              !camp ? null : (
+                <CampgroundCard camp={camp} userData={userData} key={camp.id} />
+              )
             )}
           </Stack>
         ) : (
