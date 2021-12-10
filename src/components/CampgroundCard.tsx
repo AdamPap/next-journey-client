@@ -26,30 +26,14 @@ export const CampgroundCard: React.FC<CampgroundCardProps> = ({
     >
       <UpvoteSection camp={camp} />
       <Box w="100%" py={3}>
-        <Flex justifyContent="space-between" height="full">
+        <Flex justifyContent="center" height="full">
           <Box>
-            <NextLink href="campground/[id]" as={`/campground/${camp.id}`}>
-              <Link>
-                <Heading fontSize="lg"> {camp.name} </Heading>
-              </Link>
-            </NextLink>
-            <Text mt={4}>{camp.location}</Text>
-            <Box position="relative" width="100%" height="100%">
-              <NextImage
-                src={camp.image}
-                layout="intrinsic"
-                objectFit="contain"
-                width={1500}
-                height={1000}
-              />
-            </Box>
-          </Box>
-          <Box>
-            <Flex
-              height="full"
-              flexDirection="column"
-              justifyContent="space-between"
-            >
+            <Flex justifyContent="space-between">
+              <NextLink href="campground/[id]" as={`/campground/${camp.id}`}>
+                <Link>
+                  <Heading fontSize="lg"> {camp.name} </Heading>
+                </Link>
+              </NextLink>
               <Text
                 color={
                   camp.creator.id === userData?.currentUser?.id
@@ -57,16 +41,39 @@ export const CampgroundCard: React.FC<CampgroundCardProps> = ({
                     : "black"
                 }
               >
-                Posted by{" "}
+                Posted by
                 {camp.creator.id === userData?.currentUser?.id
-                  ? "you"
-                  : camp.creator.username}
+                  ? " you"
+                  : ` ${camp.creator.username}`}
               </Text>
-
-              {camp.creator.id === userData?.currentUser?.id && (
-                <EditDeleteCampgroundButtons id={camp.id} />
-              )}
             </Flex>
+
+            <Box
+              mt={3}
+              position="relative"
+              width="100%"
+              maxHeight="400px"
+              borderRadius="md"
+              overflow="hidden"
+            >
+              <NextImage
+                src={camp.image}
+                layout="intrinsic"
+                objectFit="contain"
+                width={600}
+                height={400}
+              />
+            </Box>
+            <Box mt={3}>
+              <Flex>
+                <Box width="100%">
+                  <Text>{camp.location}</Text>
+                </Box>
+                {camp.creator.id === userData?.currentUser?.id && (
+                  <EditDeleteCampgroundButtons id={camp.id} />
+                )}
+              </Flex>
+            </Box>
           </Box>
         </Flex>
       </Box>

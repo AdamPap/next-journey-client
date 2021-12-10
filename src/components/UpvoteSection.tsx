@@ -14,12 +14,7 @@ export const UpvoteSection: React.FC<UpvoteSectionProps> = ({ camp }) => {
   const [, vote] = useVoteMutation();
 
   return (
-    <Flex
-      flexDirection="column"
-      alignItems="center"
-      justifyContent="space-around"
-      mr={4}
-    >
+    <Flex flexDirection="column" alignItems="center" mr={4}>
       <IconButton
         aria-label="Upvote"
         fontSize="30px"
