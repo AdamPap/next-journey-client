@@ -47,23 +47,26 @@ export const CampgroundCard: React.FC<CampgroundCardProps> = ({
                   : ` ${camp.creator.username}`}
               </Text>
             </Flex>
-
-            <Box
-              mt={3}
-              position="relative"
-              width="100%"
-              maxHeight="400px"
-              borderRadius="md"
-              overflow="hidden"
-            >
-              <NextImage
-                src={camp.image}
-                layout="intrinsic"
-                objectFit="contain"
-                width={600}
-                height={400}
-              />
-            </Box>
+            <NextLink href="campground/[id]" as={`/campground/${camp.id}`}>
+              <Link>
+                <Box
+                  mt={3}
+                  position="relative"
+                  width="100%"
+                  maxHeight="600px"
+                  borderRadius="md"
+                  overflow="hidden"
+                >
+                  <NextImage
+                    src={camp.image}
+                    layout="intrinsic"
+                    objectFit="contain"
+                    width={600}
+                    height={400}
+                  />
+                </Box>
+              </Link>
+            </NextLink>
             <Box mt={3}>
               <Flex>
                 <Box width="100%">

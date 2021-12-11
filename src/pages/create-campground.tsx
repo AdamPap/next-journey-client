@@ -55,6 +55,13 @@ const CreateCampground: React.FC<{}> = ({}) => {
                 placeholder="Location"
               />
             </Box>
+            <Box mt={4}>
+              <InputField
+                name="image"
+                label="Image Url"
+                placeholder="Image Url"
+              />
+            </Box>
             <Button
               mt={4}
               isLoading={isSubmitting}
