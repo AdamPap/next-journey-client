@@ -5,10 +5,14 @@ import { useCurrentUserQuery, useLogoutMutation } from "../generated/graphql";
 import { Button } from "@chakra-ui/button";
 import { isServer } from "../utils/isServer";
 import router from "next/router";
+import { DarkModeSwitch } from "./DarkModeSwitch";
+import { useColorModeValue } from "@chakra-ui/color-mode";
 
 interface NavbarProps {}
 
 export const Navbar: React.FC<NavbarProps> = ({}) => {
+  const bg = useColorModeValue("gray.50", "gray.900");
+
   const [{ data, fetching }] = useCurrentUserQuery({
     // NOTE: the query is not gonna run on the server
     // because we don't need it. CurrentUser doesn't affect
@@ -34,6 +38,9 @@ export const Navbar: React.FC<NavbarProps> = ({}) => {
             </Link>
           </NextLink>
           <Flex justifyContent="right">
+            <Box>
+              <DarkModeSwitch />
+            </Box>
             <Box>{data?.currentUser?.name}</Box>
             <Button
               isLoading={logoutFetching}
@@ -63,9 +70,12 @@ export const Navbar: React.FC<NavbarProps> = ({}) => {
       top={0}
       zIndex={100}
       p={4}
-      bg="tomato"
+      // borderBottomWidth={1}
+      // borderColor="teal.200"
       display="flex"
       justifyContent="flex-end"
+      shadow="md"
+      backgroundColor={bg}
     >
       {body}
     </Box>

@@ -1,4 +1,5 @@
 import { Text } from "@chakra-ui/layout";
+import { useColorModeValue } from "@chakra-ui/color-mode";
 import { Box, Flex, Heading, Link } from "@chakra-ui/react";
 import NextLink from "next/link";
 import React from "react";
@@ -23,6 +24,7 @@ export const CampgroundCard: React.FC<CampgroundCardProps> = ({
       shadow="xl"
       // borderWidth="1px"
       key={camp.id}
+      backgroundColor={useColorModeValue("gray.100", "gray.700")}
     >
       <UpvoteSection camp={camp} />
       <Box w="100%" py={3}>
@@ -37,8 +39,8 @@ export const CampgroundCard: React.FC<CampgroundCardProps> = ({
               <Text
                 color={
                   camp.creator.id === userData?.currentUser?.id
-                    ? `teal`
-                    : "black"
+                    ? useColorModeValue("teal.700", "white")
+                    : useColorModeValue("black", "gray.300")
                 }
               >
                 Posted by
