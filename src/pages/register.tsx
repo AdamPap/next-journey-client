@@ -22,14 +22,14 @@ const Register = () => {
       <Flex height="100%" minHeight="90vh">
         <Box
           display={{ base: "none", lg: "block" }}
-          width="60%"
+          width="50%"
           backgroundImage="url('https://res.cloudinary.com/dnrjcvoom/image/upload/v1639403772/next-journey/photo-1463693396721-8ca0cfa2b3b5_fi2lld.jpg')"
           backgroundPosition="20% 50%"
           backgroundRepeat="no-repeat"
           backgroundSize="cover"
         ></Box>
         <Flex
-          width={{ base: "100%", lg: "40%" }}
+          width={{ base: "100%", lg: "50%" }}
           justifyContent="center"
           alignItems="center"
         >
