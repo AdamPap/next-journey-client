@@ -40,12 +40,13 @@ const Index = () => {
   // }
 
   return (
-    <Layout>
-      <Flex p={5} justifyContent="space-between" alignItems="center">
+    <Layout variant="regular">
+      <Flex p={5} pt={12} justifyContent="space-between" alignItems="center">
         <Heading fontSize="x-large">Discover Places</Heading>
         {/* <Box p={4}> */}
         <NextLink href="/create-campground">
           <Button
+            variant="outline"
             colorScheme="teal"
             as={Link}
             style={{ textDecoration: "none" }}

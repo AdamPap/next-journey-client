@@ -1,3 +1,4 @@
+import { useColorModeValue } from "@chakra-ui/color-mode";
 import {
   FormControl,
   FormLabel,
@@ -28,6 +29,8 @@ export const InputField: React.FC<InputFieldProps> = ({
         {...props}
         id={field.name}
         placeholder={props.placeholder}
+        borderColor={useColorModeValue("teal.400", "teal.600")}
+        variant="outline"
       />
       {error ? <FormErrorMessage>{error}</FormErrorMessage> : null}
     </FormControl>

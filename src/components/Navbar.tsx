@@ -76,11 +76,13 @@ export const Navbar: React.FC<NavbarProps> = ({}) => {
       // borderBottomWidth={1}
       // borderColor="teal.200"
       display="flex"
-      justifyContent="flex-end"
+      alignItems="center"
+      // justifyContent="flex-end"
       shadow="md"
       backgroundColor={bg}
+      height="10vh"
     >
-      <Box mx="auto" maxW="900px" w="100%" px={4}>
+      <Box mx="auto" w="100%" px={4}>
         <Flex
           p={2}
           justifyContent="space-between"

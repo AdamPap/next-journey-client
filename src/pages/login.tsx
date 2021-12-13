@@ -48,7 +48,7 @@ const Login = () => {
               />
             </Box>
             <Button
-              mt={4}
+              mt={5}
               isLoading={isSubmitting}
               colorScheme="teal"
               type="submit"
@@ -56,8 +56,8 @@ const Login = () => {
               Login
             </Button>
             <Flex mt={3}>
-              <NextLink href="forgot-password">
-                <Link ml="auto" color="blue">
+              <NextLink href="/forgot-password">
+                <Link ml="auto" color="teal">
                   Forgot Password?
                 </Link>
               </NextLink>
