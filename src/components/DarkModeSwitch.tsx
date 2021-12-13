@@ -6,7 +6,11 @@ export const DarkModeSwitch = () => {
   const { colorMode, toggleColorMode } = useColorMode();
   const isDark = colorMode === "dark";
 
-  const icon = isDark ? <MoonIcon /> : <SunIcon />;
+  const icon = isDark ? (
+    <MoonIcon color="teal.200" />
+  ) : (
+    <SunIcon color="teal.600" />
+  );
 
   return (
     <Flex alignItems="center">

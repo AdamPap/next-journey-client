@@ -42,23 +42,23 @@ const Index = () => {
   return (
     <Layout>
       <Flex p={5} justifyContent="space-between" alignItems="center">
-        <Heading fontSize="xx-large">Campgrounds</Heading>
+        <Heading fontSize="x-large">Discover Places</Heading>
         {/* <Box p={4}> */}
         <NextLink href="/create-campground">
           <Button
-            colorScheme="blackAlpha"
+            colorScheme="teal"
             as={Link}
             style={{ textDecoration: "none" }}
           >
-            Create Campground
+            Suggest a Place
           </Button>
         </NextLink>
         {/* </Box> */}
       </Flex>
 
-      <Box px={5}>
+      <Flex justifyContent="center" px={5}>
         {data && !fetching ? (
-          <Stack spacing={8}>
+          <Stack maxWidth="900px" width="100%" spacing={8}>
             {data.campgrounds.campgrounds.map((camp) =>
               /*NOTE: this prevents error when deleted campgrounds
                       are in cache
@@ -90,7 +90,7 @@ const Index = () => {
             Load More
           </Button>
         ) : null}
-      </Box>
+      </Flex>
     </Layout>
   );
 };

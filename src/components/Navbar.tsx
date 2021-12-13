@@ -1,12 +1,16 @@
-import { Box, Flex, Heading, Link } from "@chakra-ui/layout";
+import { Box, Divider, Flex, Heading, Link } from "@chakra-ui/layout";
 import React from "react";
 import NextLink from "next/link";
 import { useCurrentUserQuery, useLogoutMutation } from "../generated/graphql";
-import { Button } from "@chakra-ui/button";
+import { Button, IconButton } from "@chakra-ui/button";
 import { isServer } from "../utils/isServer";
 import router from "next/router";
 import { DarkModeSwitch } from "./DarkModeSwitch";
 import { useColorModeValue } from "@chakra-ui/color-mode";
+import { UserIcon } from "../components/UserIcon";
+import { Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/menu";
+import Wrapper from "./Wrapper";
+import { MenuDivider } from "@chakra-ui/react";
 
 interface NavbarProps {}
 
@@ -26,42 +30,41 @@ export const Navbar: React.FC<NavbarProps> = ({}) => {
     ? (body = null)
     : data?.currentUser
     ? (body = (
-        <Flex
-          p={2}
-          justifyContent="space-between"
-          alignItems="center"
-          width="full"
-        >
-          <NextLink href="/">
-            <Link mb={-2} style={{ textDecoration: "none" }}>
-              <Heading>NextJourney</Heading>
-            </Link>
-          </NextLink>
-          <Flex justifyContent="right">
-            <Box>
-              <DarkModeSwitch />
+        <Menu placement="bottom-end">
+          <MenuButton as={IconButton} icon={<UserIcon />} borderRadius="50%" />
+          <MenuList>
+            <Box py={2} px={3} fontWeight="bold">
+              {data?.currentUser?.name}
             </Box>
-            <Box>{data?.currentUser?.name}</Box>
-            <Button
+            <MenuDivider />
+            {/* <MenuItem>Download</MenuItem> */}
+            <MenuItem
               isLoading={logoutFetching}
               onClick={async () => {
                 await logout();
                 router.reload();
               }}
-              ml={2}
+              // ml={2}
               variant="link"
             >
               Logout
-            </Button>
-          </Flex>
-        </Flex>
+            </MenuItem>
+          </MenuList>
+        </Menu>
       ))
     : (body = (
-        <>
-          <Link href="/">Home</Link>
-          <Link href="/register">Register</Link>
-          <Link href="/login">Login</Link>
-        </>
+        <Flex justifyContent="flex-end" alignItems="center">
+          <Box mr={4}>
+            <NextLink href="/register">
+              <Link>Sign Up</Link>
+            </NextLink>
+          </Box>
+          <NextLink href="login">
+            <Button as={Link} colorScheme="teal">
+              Sign In
+            </Button>
+          </NextLink>
+        </Flex>
       ));
 
   return (
@@ -77,7 +80,26 @@ export const Navbar: React.FC<NavbarProps> = ({}) => {
       shadow="md"
       backgroundColor={bg}
     >
-      {body}
+      <Box mx="auto" maxW="900px" w="100%" px={4}>
+        <Flex
+          p={2}
+          justifyContent="space-between"
+          alignItems="center"
+          width="full"
+        >
+          <NextLink href="/">
+            <Link mb={-2} style={{ textDecoration: "none" }}>
+              <Heading>NextJourney</Heading>
+            </Link>
+          </NextLink>
+          <Flex justifyContent="right" alignItems="center">
+            <Box mr={4}>
+              <DarkModeSwitch />
+            </Box>
+            {body}
+          </Flex>
+        </Flex>
+      </Box>
     </Box>
   );
 };
