@@ -7,6 +7,8 @@ import { CampgroundsQuery, CurrentUserQuery } from "../generated/graphql";
 import { EditDeleteCampgroundButtons } from "./EditDeleteCampgroundButtons";
 import { UpvoteSection } from "./UpvoteSection";
 import NextImage from "next/image";
+import Location from "../icons/Location";
+import { CampgroundDate } from "./CampgroundDate";
 
 interface CampgroundCardProps {
   camp: CampgroundsQuery["campgrounds"]["campgrounds"][0];
@@ -36,18 +38,23 @@ export const CampgroundCard: React.FC<CampgroundCardProps> = ({
                   <Heading fontSize="lg"> {camp.name} </Heading>
                 </Link>
               </NextLink>
-              <Text
-                color={
-                  camp.creator.id === userData?.currentUser?.id
-                    ? useColorModeValue("teal.700", "white")
-                    : useColorModeValue("black", "gray.300")
-                }
-              >
-                Posted by
-                {camp.creator.id === userData?.currentUser?.id
-                  ? " you"
-                  : ` ${camp.creator.username}`}
-              </Text>
+              <Flex>
+                <Box mr={4}>
+                  <CampgroundDate timestamp={camp.createdAt} />
+                </Box>
+                <Text
+                  color={
+                    camp.creator.id === userData?.currentUser?.id
+                      ? useColorModeValue("teal.700", "white")
+                      : useColorModeValue("black", "gray.300")
+                  }
+                >
+                  Posted by
+                  {camp.creator.id === userData?.currentUser?.id
+                    ? " you"
+                    : ` ${camp.creator.username}`}
+                </Text>
+              </Flex>
             </Flex>
             <NextLink href="campground/[id]" as={`/campground/${camp.id}`}>
               <Link>
@@ -72,7 +79,9 @@ export const CampgroundCard: React.FC<CampgroundCardProps> = ({
             <Box mt={3}>
               <Flex>
                 <Box width="100%">
-                  <Text>{camp.location}</Text>
+                  <Text>
+                    <Location /> {camp.location}
+                  </Text>
                 </Box>
                 {camp.creator.id === userData?.currentUser?.id && (
                   <EditDeleteCampgroundButtons id={camp.id} />

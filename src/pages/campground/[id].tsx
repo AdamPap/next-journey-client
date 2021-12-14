@@ -11,7 +11,11 @@ import { Box, Flex, Heading, Text } from "@chakra-ui/layout";
 import { EditDeleteCampgroundButtons } from "../../components/EditDeleteCampgroundButtons";
 import NextImage from "next/image";
 import { isServer } from "../../utils/isServer";
-import LikeIcon from "../../components/LikeIcon";
+import LikeIcon from "../../icons/LikeIcon";
+import DislikeIcon from "../../icons/DislikeIcon";
+import Location from "../../icons/Location";
+import { CampgroundDate } from "../../components/CampgroundDate";
+import { DragHandleIcon } from "@chakra-ui/icons";
 
 const Campground: React.FC = ({}) => {
   const router = useRouter();
@@ -58,18 +62,23 @@ const Campground: React.FC = ({}) => {
       >
         <Flex justifyContent="space-between" alignItems="flex-end" width="100%">
           <Heading>{data?.campground?.name}</Heading>
-          <Text
-            color={
-              data?.campground?.creator.id === userData?.currentUser?.id
-                ? `teal`
-                : "black"
-            }
-          >
-            Posted by
-            {data?.campground?.creator.id === userData?.currentUser?.id
-              ? " you"
-              : ` ${data?.campground?.creator.username}`}
-          </Text>
+          <Flex>
+            <Box mr={4}>
+              <CampgroundDate timestamp={data?.campground.createdAt} />
+            </Box>
+            <Text
+              color={
+                data?.campground?.creator.id === userData?.currentUser?.id
+                  ? `teal`
+                  : "black"
+              }
+            >
+              Posted by
+              {data?.campground?.creator.id === userData?.currentUser?.id
+                ? " you"
+                : ` ${data?.campground?.creator.username}`}
+            </Text>
+          </Flex>
         </Flex>
         <Box
           mt={3}
@@ -94,14 +103,19 @@ const Campground: React.FC = ({}) => {
           width="100%"
         >
           <Flex py={2} fontSize="1.2rem" alignItems="center">
-            <LikeIcon />{" "}
+            {data.campground.points > 0 ? <LikeIcon /> : <DislikeIcon />}
             <Box mt={2} ml={2}>
               {data.campground.points}
             </Box>
+            <Box ml={6}>
+              <Location /> {data?.campground?.location}
+            </Box>
           </Flex>
-          <EditDeleteCampgroundButtons id={data.campground.id} />
+
+          {data.campground.creatorId === userData?.currentUser?.id && (
+            <EditDeleteCampgroundButtons id={data.campground.id} />
+          )}
         </Flex>
-        <Box>{data?.campground?.location}</Box>
       </Flex>
     </Layout>
   );
