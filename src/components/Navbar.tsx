@@ -7,7 +7,7 @@ import { isServer } from "../utils/isServer";
 import router from "next/router";
 import { DarkModeSwitch } from "./DarkModeSwitch";
 import { useColorModeValue } from "@chakra-ui/color-mode";
-import { UserIcon } from "../components/UserIcon";
+import { UserIcon } from "../icons/UserIcon";
 import { Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/menu";
 import Wrapper from "./Wrapper";
 import { MenuDivider } from "@chakra-ui/react";
