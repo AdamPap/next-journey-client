@@ -1,11 +1,13 @@
-import { Box, Flex } from "@chakra-ui/layout";
+import { Box, Flex, Heading, Text } from "@chakra-ui/layout";
 import { Button } from "@chakra-ui/react";
 import { Form, Formik } from "formik";
 import { withUrqlClient } from "next-urql";
 import { useRouter } from "next/router";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { InputField } from "../components/InputField";
 import { Layout } from "../components/Layout";
+import NextImage from "next/image";
+import { Image } from "@chakra-ui/react";
 import {
   useCreateCampgroundMutation,
   useCurrentUserQuery,
@@ -13,6 +15,10 @@ import {
 import { createUrqlClient } from "../utils/createUrqlClient";
 
 const CreateCampground: React.FC<{}> = ({}) => {
+  const [imageUrl, setImageUrl] = useState(
+    "https://res.cloudinary.com/dnrjcvoom/image/upload/v1639138544/next-journey/avxmjme81irphoatsgpu.jpg"
+  );
+
   const [{ data, fetching }] = useCurrentUserQuery();
   const [, createCampground] = useCreateCampgroundMutation();
   const router = useRouter();
@@ -25,55 +31,79 @@ const CreateCampground: React.FC<{}> = ({}) => {
 
   return (
     <Layout variant="small">
-      <Formik
-        initialValues={{ name: "", location: "", image: "" }}
-        onSubmit={async (values) => {
-          const { error } = await createCampground({
-            name: values.name,
-            location: values.location,
-            image: values.image,
-          });
+      <Box mt={10}>
+        <Heading textAlign="center" pb={6}>
+          Add a New Place
+        </Heading>
+        <Formik
+          initialValues={{ name: "", location: "", image: "" }}
+          onSubmit={async (values) => {
+            const { error } = await createCampground({
+              name: values.name,
+              location: values.location,
+              image: values.image,
+            });
 
-          if (error?.message.includes("Not authenticated")) {
-            router.push("/login");
-          } else {
-            router.push("/");
-          }
-        }}
-      >
-        {({ isSubmitting }) => (
-          <Form>
-            <InputField
-              name="name"
-              label="Campground Name"
-              placeholder="Campground Name"
-            />
-            <Box mt={4}>
-              <InputField
-                name="location"
-                label="Location"
-                placeholder="Location"
-              />
-            </Box>
-            <Box mt={4}>
-              <InputField
-                name="image"
-                label="Image Url"
-                placeholder="Image Url"
-              />
-            </Box>
-            <Button
-              mt={4}
-              isLoading={isSubmitting}
-              colorScheme="teal"
-              type="submit"
-            >
-              Create Campground
-            </Button>
-            <Flex mt={3}></Flex>
-          </Form>
-        )}
-      </Formik>
+            if (error?.message.includes("Not authenticated")) {
+              router.push("/login");
+            } else {
+              router.push("/");
+            }
+          }}
+        >
+          {({ isSubmitting, values, setFieldValue }) => (
+            <Form>
+              <InputField name="name" label="Name" placeholder="Name" />
+              <Box mt={4}>
+                <InputField
+                  name="location"
+                  label="Location"
+                  placeholder="Location"
+                />
+              </Box>
+              <Box mt={4}>
+                <InputField
+                  name="image"
+                  label="Image Url"
+                  placeholder="Image Url"
+                />
+              </Box>
+
+              <Text mt={6} mb={3}>
+                Image Preview
+              </Text>
+              <Flex
+                borderRadius={5}
+                mx="auto"
+                height="280px"
+                width="400px"
+                border="1px"
+                borderColor="teal.600"
+                justifyContent="center"
+              >
+                {values.image && (
+                  <Image
+                    src={values.image}
+                    fallbackSrc="https://res.cloudinary.com/dnrjcvoom/image/upload/v1639508916/next-journey/%CE%A0%CF%81%CE%BF%CF%83%CE%B8%CE%AD%CF%83%CF%84%CE%B5_%CE%B5%CF%80%CE%B9%CE%BA%CE%B5%CF%86%CE%B1%CE%BB%CE%AF%CE%B4%CE%B1_n1sfqw.jpg"
+                    fit="contain"
+                    htmlWidth="360px"
+                    htmlHeight="280px"
+                  />
+                )}
+              </Flex>
+              <Button
+                width="100%"
+                mt={6}
+                isLoading={isSubmitting}
+                colorScheme="teal"
+                type="submit"
+              >
+                Add a new place
+              </Button>
+            </Form>
+          )}
+        </Formik>
+      </Box>
     </Layout>
   );
 };
