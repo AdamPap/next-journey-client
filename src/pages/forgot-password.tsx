@@ -9,6 +9,7 @@ import Wrapper from "../components/Wrapper";
 import { useForgotPasswordMutation } from "../generated/graphql";
 import { createUrqlClient } from "../utils/createUrqlClient";
 import { useToast } from "@chakra-ui/react";
+import { toErrorMap } from "../utils/toErrorMap";
 
 const ForgotPassword: React.FC<{}> = ({}) => {
   const [, forgotPassword] = useForgotPasswordMutation();
@@ -26,6 +27,7 @@ const ForgotPassword: React.FC<{}> = ({}) => {
         duration: 9000,
         isClosable: true,
       });
+      setIsComplete(false);
     }
   }, [isComplete]);
 
@@ -38,8 +40,12 @@ const ForgotPassword: React.FC<{}> = ({}) => {
         <Formik
           initialValues={{ email: "" }}
           onSubmit={async (values, { setErrors }) => {
-            await forgotPassword(values);
-            setIsComplete(true);
+            const res = await forgotPassword(values);
+            if (res.data?.forgotPassword.errors) {
+              setErrors(toErrorMap(res.data.forgotPassword.errors));
+            } else if (res.data?.forgotPassword.success) {
+              setIsComplete(true);
+            }
           }}
         >
           {({ isSubmitting }) => (
