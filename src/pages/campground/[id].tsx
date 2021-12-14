@@ -11,6 +11,7 @@ import { Box, Flex, Heading, Text } from "@chakra-ui/layout";
 import { EditDeleteCampgroundButtons } from "../../components/EditDeleteCampgroundButtons";
 import NextImage from "next/image";
 import { isServer } from "../../utils/isServer";
+import LikeIcon from "../../components/LikeIcon";
 
 const Campground: React.FC = ({}) => {
   const router = useRouter();
@@ -47,8 +48,9 @@ const Campground: React.FC = ({}) => {
   }
 
   return (
-    <Layout>
+    <Layout variant="regular">
       <Flex
+        mt={8}
         justifyContent="center"
         flexDirection="column"
         alignItems="flex-start"
@@ -91,7 +93,12 @@ const Campground: React.FC = ({}) => {
           alignItems="flex-end"
           width="100%"
         >
-          <Box>Points: {data.campground.points}</Box>
+          <Flex py={2} fontSize="1.2rem" alignItems="center">
+            <LikeIcon />{" "}
+            <Box mt={2} ml={2}>
+              {data.campground.points}
+            </Box>
+          </Flex>
           <EditDeleteCampgroundButtons id={data.campground.id} />
         </Flex>
         <Box>{data?.campground?.location}</Box>
