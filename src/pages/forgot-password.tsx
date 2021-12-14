@@ -57,7 +57,7 @@ const ForgotPassword: React.FC<{}> = ({}) => {
                 type="email"
               />
               <Button
-                mt={4}
+                mt={6}
                 width="100%"
                 pt={1}
                 isLoading={isSubmitting}
