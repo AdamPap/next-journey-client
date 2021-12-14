@@ -39,7 +39,7 @@ export type FieldError = {
 export type ForgotPasswordResponse = {
   __typename?: 'ForgotPasswordResponse';
   errors?: Maybe<Array<FieldError>>;
-  success: Scalars['Boolean'];
+  success?: Maybe<Scalars['Boolean']>;
 };
 
 export type LoginInput = {
@@ -96,6 +96,7 @@ export type MutationRegisterArgs = {
 
 export type MutationUpdateCampgroundArgs = {
   id: Scalars['Int'];
+  image: Scalars['String'];
   location: Scalars['String'];
   name: Scalars['String'];
 };
@@ -186,7 +187,7 @@ export type ForgotPasswordMutationVariables = Exact<{
 }>;
 
 
-export type ForgotPasswordMutation = { __typename?: 'Mutation', forgotPassword: { __typename?: 'ForgotPasswordResponse', success: boolean, errors?: Array<{ __typename?: 'FieldError', field: string, message: string }> | null | undefined } };
+export type ForgotPasswordMutation = { __typename?: 'Mutation', forgotPassword: { __typename?: 'ForgotPasswordResponse', success?: boolean | null | undefined, errors?: Array<{ __typename?: 'FieldError', field: string, message: string }> | null | undefined } };
 
 export type LoginMutationVariables = Exact<{
   options: LoginInput;
@@ -214,10 +215,11 @@ export type UpdateCampgroundMutationVariables = Exact<{
   id: Scalars['Int'];
   location: Scalars['String'];
   name: Scalars['String'];
+  image: Scalars['String'];
 }>;
 
 
-export type UpdateCampgroundMutation = { __typename?: 'Mutation', updateCampground?: { __typename?: 'Campground', id: number, name: string, location: string } | null | undefined };
+export type UpdateCampgroundMutation = { __typename?: 'Mutation', updateCampground?: { __typename?: 'Campground', id: number, name: string, location: string, image: string } | null | undefined };
 
 export type VoteMutationVariables = Exact<{
   value: Scalars['Int'];
@@ -361,11 +363,12 @@ export function useRegisterMutation() {
   return Urql.useMutation<RegisterMutation, RegisterMutationVariables>(RegisterDocument);
 };
 export const UpdateCampgroundDocument = gql`
-    mutation UpdateCampground($id: Int!, $location: String!, $name: String!) {
-  updateCampground(id: $id, location: $location, name: $name) {
+    mutation UpdateCampground($id: Int!, $location: String!, $name: String!, $image: String!) {
+  updateCampground(id: $id, location: $location, name: $name, image: $image) {
     id
     name
     location
+    image
   }
 }
     `;

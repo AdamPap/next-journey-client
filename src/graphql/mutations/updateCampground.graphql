@@ -1,7 +1,13 @@
-mutation UpdateCampground($id: Int!, $location: String!, $name: String!) {
-  updateCampground(id: $id, location: $location, name: $name) {
+mutation UpdateCampground(
+  $id: Int!
+  $location: String!
+  $name: String!
+  $image: String!
+) {
+  updateCampground(id: $id, location: $location, name: $name, image: $image) {
     id
     name
     location
+    image
   }
 }
