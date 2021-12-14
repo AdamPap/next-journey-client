@@ -70,7 +70,6 @@ const Login = () => {
                   </Box>
                   <Button
                     width="100%"
-                    pt={1}
                     mt={8}
                     isLoading={isSubmitting}
                     colorScheme="teal"

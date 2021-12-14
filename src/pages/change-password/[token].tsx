@@ -82,7 +82,6 @@ const ChangePassword: NextPage<{ token: string }> = ({ token }) => {
               <Button
                 mt={4}
                 width="100%"
-                pt={1}
                 isLoading={isSubmitting}
                 colorScheme="teal"
                 type="submit"

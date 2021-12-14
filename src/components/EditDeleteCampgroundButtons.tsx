@@ -15,14 +15,8 @@ export const EditDeleteCampgroundButtons: React.FC<EditDeleteCampgroundButtonsPr
     return (
       <Flex justifyContent="end">
         <NextLink href={"/campground/edit/[id]"} as={`/campground/edit/${id}`}>
-          <Button
-            size="sm"
-            leftIcon={<EditIcon />}
-            colorScheme="teal"
-            px={2}
-            // pt={1}
-          >
-            <Box pt={1}>Edit</Box>
+          <Button size="sm" leftIcon={<EditIcon />} colorScheme="teal" px={2}>
+            Edit
           </Button>
         </NextLink>
 
@@ -31,11 +25,10 @@ export const EditDeleteCampgroundButtons: React.FC<EditDeleteCampgroundButtonsPr
           leftIcon={<DeleteIcon />}
           colorScheme="red"
           px={2}
-          // pt={1}
           ml={2}
           onClick={() => deleteCampground({ id })}
         >
-          <Box pt={1}>Delete</Box>
+          Delete
         </Button>
         {/* <IconButton
           aria-label="Delete campground"

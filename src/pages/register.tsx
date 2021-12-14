@@ -100,7 +100,6 @@ const Register = () => {
                   </Checkbox>
                   <Button
                     width="100%"
-                    pt={1}
                     isLoading={isSubmitting}
                     colorScheme="teal"
                     type="submit"
