@@ -1,4 +1,4 @@
-import { Box, Button, Flex } from "@chakra-ui/react";
+import { Box, Button, Flex, Heading, Text, Image } from "@chakra-ui/react";
 import { Form, Formik } from "formik";
 import { withUrqlClient } from "next-urql";
 import { useRouter } from "next/router";
@@ -45,52 +45,86 @@ const EditCampground: React.FC<EditCampgroundProps> = ({}) => {
 
   return (
     <Layout variant="small">
-      <Formik
-        initialValues={{
-          name: campData?.campground?.name || "",
-          location: campData?.campground!.location || "",
-        }}
-        onSubmit={async (values) => {
-          const { error } = await updateCampground({
-            id: intId,
-            name: values.name,
-            location: values.location,
-          });
+      <Box mt={10}>
+        <Heading textAlign="center" pb={6}>
+          Edit {campData?.campground?.name}
+        </Heading>
+        <Formik
+          initialValues={{
+            name: campData?.campground?.name || "",
+            location: campData?.campground!.location || "",
+            image: campData?.campground?.image || "",
+          }}
+          onSubmit={async (values) => {
+            const { error } = await updateCampground({
+              id: intId,
+              name: values.name,
+              location: values.location,
+              image: values.image,
+            });
 
-          if (error?.message.includes("Not authenticated")) {
-            router.push("/login");
-          } else {
-            // router.push(`/campground/${intId}`);
-            router.back();
-          }
-        }}
-      >
-        {({ isSubmitting }) => (
-          <Form>
-            <InputField
-              name="name"
-              label="Campground Name"
-              placeholder="Campground Name"
-            />
-            <Box mt={4}>
-              <InputField
-                name="location"
-                label="Location"
-                placeholder="Location"
-              />
-            </Box>
-            <Button
-              mt={4}
-              isLoading={isSubmitting}
-              colorScheme="teal"
-              type="submit"
-            >
-              Update Campground
-            </Button>
-            <Flex mt={3}></Flex>
-          </Form>
-        )}
-      </Formik>
+            if (error?.message.includes("Not authenticated")) {
+              router.push("/login");
+            } else {
+              // router.push(`/campground/${intId}`);
+              router.back();
+            }
+          }}
+        >
+          {({ isSubmitting, values }) => (
+            <Form>
+              <InputField name="name" label="Name" placeholder="Name" />
+              <Box mt={4}>
+                <InputField
+                  name="location"
+                  label="Location"
+                  placeholder="Location"
+                />
+              </Box>
+              <Box mt={4}>
+                <InputField
+                  name="image"
+                  label="Image Url"
+                  placeholder="Image Url"
+                />
+              </Box>
+
+              <Text mt={6} mb={3}>
+                Image Preview
+              </Text>
+              <Flex
+                borderRadius={5}
+                mx="auto"
+                height="280px"
+                width="400px"
+                border="1px"
+                borderColor="teal.600"
+                justifyContent="center"
+              >
+                {values.image && (
+                  <Image
+                    src={values.image}
+                    fallbackSrc="https://res.cloudinary.com/dnrjcvoom/image/upload/v1639508916/next-journey/%CE%A0%CF%81%CE%BF%CF%83%CE%B8%CE%AD%CF%83%CF%84%CE%B5_%CE%B5%CF%80%CE%B9%CE%BA%CE%B5%CF%86%CE%B1%CE%BB%CE%AF%CE%B4%CE%B1_n1sfqw.jpg"
+                    fit="contain"
+                    htmlWidth="360px"
+                    htmlHeight="280px"
+                  />
+                )}
+              </Flex>
+              <Button
+                width="100%"
+                mt={6}
+                isLoading={isSubmitting}
+                colorScheme="teal"
+                type="submit"
+              >
+                Update {campData?.campground?.name}
+              </Button>
+              <Flex mt={3}></Flex>
+            </Form>
+          )}
+        </Formik>
+      </Box>
     </Layout>
   );
 };
