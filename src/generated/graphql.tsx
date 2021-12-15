@@ -23,7 +23,9 @@ export type Campground = {
   creatorId: Scalars['Float'];
   id: Scalars['Float'];
   image: Scalars['String'];
+  latitude: Scalars['Float'];
   location: Scalars['String'];
+  longitude: Scalars['Float'];
   name: Scalars['String'];
   points: Scalars['Float'];
   updatedAt: Scalars['DateTime'];
@@ -234,7 +236,7 @@ export type CampgroundQueryVariables = Exact<{
 }>;
 
 
-export type CampgroundQuery = { __typename?: 'Query', campground?: { __typename?: 'Campground', id: number, name: string, location: string, image: string, points: number, createdAt: any, updatedAt: any, creatorId: number, voteStatus?: number | null | undefined, creator: { __typename?: 'User', id: number, username: string } } | null | undefined };
+export type CampgroundQuery = { __typename?: 'Query', campground?: { __typename?: 'Campground', id: number, name: string, location: string, longitude: number, latitude: number, image: string, points: number, createdAt: any, updatedAt: any, creatorId: number, voteStatus?: number | null | undefined, creator: { __typename?: 'User', id: number, username: string } } | null | undefined };
 
 export type CampgroundsQueryVariables = Exact<{
   limit: Scalars['Int'];
@@ -391,6 +393,8 @@ export const CampgroundDocument = gql`
     id
     name
     location
+    longitude
+    latitude
     image
     points
     createdAt
