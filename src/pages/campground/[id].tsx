@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { createUrqlClient } from "../../utils/createUrqlClient";
 import { withUrqlClient } from "next-urql";
 import { useRouter } from "next/router";
@@ -16,6 +16,9 @@ import DislikeIcon from "../../icons/DislikeIcon";
 import Location from "../../icons/Location";
 import { CampgroundDate } from "../../components/CampgroundDate";
 import { DragHandleIcon } from "@chakra-ui/icons";
+import ReactMapGL, { Marker } from "react-map-gl";
+import "mapbox-gl/dist/mapbox-gl.css";
+import LocationIcon from "../../icons/LocationIcon";
 
 const Campground: React.FC = ({}) => {
   const router = useRouter();
@@ -99,7 +102,7 @@ const Campground: React.FC = ({}) => {
         <Flex
           my={3}
           justifyContent="space-between"
-          alignItems="flex-end"
+          alignItems="center"
           width="100%"
         >
           <Flex py={2} fontSize="1.2rem" alignItems="center">
@@ -116,6 +119,34 @@ const Campground: React.FC = ({}) => {
             <EditDeleteCampgroundButtons id={data.campground.id} />
           )}
         </Flex>
+        <Box
+          width="100%"
+          // position="relative"
+          mb={6}
+          rounded="md"
+          overflow="hidden"
+        >
+          <ReactMapGL
+            mapboxApiAccessToken={process.env.NEXT_PUBLIC_MAPBOX_TOKEN}
+            latitude={data.campground.latitude}
+            longitude={data.campground.longitude}
+            zoom={12}
+            width="100%"
+            height="300px"
+            mapStyle="mapbox://styles/mapbox/dark-v10"
+          >
+            <Marker
+              latitude={data.campground.latitude}
+              longitude={data.campground.longitude}
+              offsetLeft={-20}
+              offsetTop={-10}
+            >
+              <Box fontSize="2rem">
+                <LocationIcon />
+              </Box>
+            </Marker>
+          </ReactMapGL>
+        </Box>
       </Flex>
     </Layout>
   );

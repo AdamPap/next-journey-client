@@ -84,7 +84,7 @@ const CreateCampground: React.FC<{}> = ({}) => {
                 {values.image && (
                   <Image
                     src={values.image}
-                    fallbackSrc="https://res.cloudinary.com/dnrjcvoom/image/upload/v1639508916/next-journey/%CE%A0%CF%81%CE%BF%CF%83%CE%B8%CE%AD%CF%83%CF%84%CE%B5_%CE%B5%CF%80%CE%B9%CE%BA%CE%B5%CF%86%CE%B1%CE%BB%CE%AF%CE%B4%CE%B1_n1sfqw.jpg"
+                    fallbackSrc="https://res.cloudinary.com/dnrjcvoom/image/upload/v1639588648/next-journey/%CE%A0%CF%81%CE%BF%CF%83%CE%B8%CE%AD%CF%83%CF%84%CE%B5_%CE%B5%CF%80%CE%B9%CE%BA%CE%B5%CF%86%CE%B1%CE%BB%CE%AF%CE%B4%CE%B1_tkwm84.jpg"
                     fit="contain"
                     htmlWidth="360px"
                     htmlHeight="280px"
