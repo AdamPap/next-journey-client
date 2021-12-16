@@ -58,7 +58,7 @@ const CreateCampground: React.FC<{}> = ({}) => {
                 <InputField
                   name="location"
                   label="Location"
-                  placeholder="Location"
+                  placeholder="Location, Area/City, Country"
                 />
               </Box>
               <Box mt={4}>
