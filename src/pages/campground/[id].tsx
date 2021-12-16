@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { createUrqlClient } from "../../utils/createUrqlClient";
 import { withUrqlClient } from "next-urql";
 import { useRouter } from "next/router";
@@ -22,6 +22,14 @@ import LocationIcon from "../../icons/LocationIcon";
 
 const Campground: React.FC = ({}) => {
   const router = useRouter();
+
+  const [viewport, setViewport] = useState({
+    latitude: 37.7577,
+    longitude: -122.4376,
+    zoom: 12,
+    // mapStyle: "mapbox://styles/mapbox/dark-v10",
+  });
+
   const intId =
     typeof router.query.id === "string" ? parseInt(router.query.id) : -1;
   const [{ fetching, data, error }] = useCampgroundQuery({
@@ -37,6 +45,16 @@ const Campground: React.FC = ({}) => {
     // SEO
     pause: isServer(),
   });
+
+  useEffect(() => {
+    if (data?.campground) {
+      setViewport({
+        latitude: data?.campground?.latitude,
+        longitude: data?.campground?.longitude,
+        zoom: 12,
+      });
+    }
+  }, [data?.campground]);
 
   if (fetching) {
     return (
@@ -106,7 +124,7 @@ const Campground: React.FC = ({}) => {
           width="100%"
         >
           <Flex py={2} fontSize="1.2rem" alignItems="center">
-            {data.campground.points > 0 ? <LikeIcon /> : <DislikeIcon />}
+            {data.campground.points >= 0 ? <LikeIcon /> : <DislikeIcon />}
             <Box mt={2} ml={2}>
               {data.campground.points}
             </Box>
@@ -128,12 +146,12 @@ const Campground: React.FC = ({}) => {
         >
           <ReactMapGL
             mapboxApiAccessToken={process.env.NEXT_PUBLIC_MAPBOX_TOKEN}
-            latitude={data.campground.latitude}
-            longitude={data.campground.longitude}
-            zoom={12}
+            {...viewport}
             width="100%"
             height="300px"
-            mapStyle="mapbox://styles/mapbox/dark-v10"
+            pitch={45}
+            onViewportChange={(nviewport: any) => setViewport(nviewport)}
+            mapStyle="mapbox://styles/adampap/ckx8z4py00rr114qpdeaekhl8/draft"
           >
             <Marker
               latitude={data.campground.latitude}

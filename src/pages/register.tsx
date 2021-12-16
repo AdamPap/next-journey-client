@@ -23,8 +23,8 @@ const Register = () => {
         <Box
           display={{ base: "none", lg: "block" }}
           width="50%"
-          backgroundImage="url('https://res.cloudinary.com/dnrjcvoom/image/upload/v1639403772/next-journey/photo-1463693396721-8ca0cfa2b3b5_fi2lld.jpg')"
-          backgroundPosition="20% 50%"
+          backgroundImage="url('https://images.unsplash.com/photo-1498889444388-e67ea62c464b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=765&q=80')"
+          backgroundPosition="center"
           backgroundRepeat="no-repeat"
           backgroundSize="cover"
         ></Box>
