@@ -77,7 +77,7 @@ export const CampgroundCard: React.FC<CampgroundCardProps> = ({
               </Link>
             </NextLink>
             <Box mt={3}>
-              <Flex>
+              <Flex alignItems="center">
                 <Box width="100%">
                   <Text>
                     <Location /> {camp.location}
