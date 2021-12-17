@@ -120,6 +120,7 @@ export type Query = {
   campground?: Maybe<Campground>;
   campgrounds: PaginatedCampgrounds;
   currentUser?: Maybe<User>;
+  users?: Maybe<Array<User>>;
 };
 
 
@@ -145,6 +146,8 @@ export type User = {
   createdAt: Scalars['DateTime'];
   email: Scalars['String'];
   id: Scalars['Float'];
+  isAccepted: Scalars['Boolean'];
+  isAdmin: Scalars['Boolean'];
   name: Scalars['String'];
   updatedAt: Scalars['DateTime'];
   username: Scalars['String'];
@@ -250,6 +253,11 @@ export type CurrentUserQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type CurrentUserQuery = { __typename?: 'Query', currentUser?: { __typename?: 'User', id: number, username: string, name: string, email: string } | null | undefined };
+
+export type UsersQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type UsersQuery = { __typename?: 'Query', users?: Array<{ __typename?: 'User', id: number, name: string, isAccepted: boolean, isAdmin: boolean }> | null | undefined };
 
 export const RegularErrorFragmentDoc = gql`
     fragment RegularError on FieldError {
@@ -449,4 +457,18 @@ export const CurrentUserDocument = gql`
 
 export function useCurrentUserQuery(options: Omit<Urql.UseQueryArgs<CurrentUserQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<CurrentUserQuery>({ query: CurrentUserDocument, ...options });
+};
+export const UsersDocument = gql`
+    query users {
+  users {
+    id
+    name
+    isAccepted
+    isAdmin
+  }
+}
+    `;
+
+export function useUsersQuery(options: Omit<Urql.UseQueryArgs<UsersQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<UsersQuery>({ query: UsersDocument, ...options });
 };
