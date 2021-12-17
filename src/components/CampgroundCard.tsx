@@ -38,18 +38,20 @@ export const CampgroundCard: React.FC<CampgroundCardProps> = ({
                   <Heading fontSize="lg"> {camp.name} </Heading>
                 </Link>
               </NextLink>
-              <Flex>
-                <Box mr={4}>
+              <Flex flexDirection={{ base: "column", sm: "row" }}>
+                <Box mr={{ base: 0, sm: 4 }}>
                   <CampgroundDate timestamp={camp.createdAt} />
                 </Box>
                 <Text
+                  textAlign="end"
+                  fontSize="sm"
                   color={
                     camp.creator.id === userData?.currentUser?.id
                       ? useColorModeValue("teal.700", "white")
                       : useColorModeValue("black", "gray.300")
                   }
                 >
-                  Posted by
+                  by
                   {camp.creator.id === userData?.currentUser?.id
                     ? " you"
                     : ` ${camp.creator.username}`}
@@ -79,7 +81,7 @@ export const CampgroundCard: React.FC<CampgroundCardProps> = ({
             <Box mt={3}>
               <Flex alignItems="center">
                 <Box width="100%">
-                  <Text>
+                  <Text fontSize={{ base: "sm", sm: "md" }}>
                     <Location /> {camp.location}
                   </Text>
                 </Box>

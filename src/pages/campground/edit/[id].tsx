@@ -45,7 +45,7 @@ const EditCampground: React.FC<EditCampgroundProps> = ({}) => {
 
   return (
     <Layout variant="small">
-      <Box mt={10}>
+      <Box mt={10} pb={{ base: 4, sm: 0 }} px={{ base: 4, sm: 0 }}>
         <Heading textAlign="center" pb={6}>
           Edit {campData?.campground?.name}
         </Heading>
@@ -96,7 +96,7 @@ const EditCampground: React.FC<EditCampgroundProps> = ({}) => {
                 borderRadius={5}
                 mx="auto"
                 height="280px"
-                width="400px"
+                width={{ base: "360", sm: "400px" }}
                 border="1px"
                 borderColor="teal.600"
                 justifyContent="center"

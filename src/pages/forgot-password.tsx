@@ -33,7 +33,7 @@ const ForgotPassword: React.FC<{}> = ({}) => {
 
   return (
     <Layout variant="small">
-      <Box mt={10}>
+      <Box mt={10} pb={{ base: 4, sm: 0 }} px={{ base: 4, sm: 0 }}>
         <Heading textAlign="center" pb={6}>
           Password Reset
         </Heading>

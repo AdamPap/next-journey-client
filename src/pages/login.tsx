@@ -84,6 +84,13 @@ const Login = () => {
                       </Link>
                     </NextLink>
                   </Flex>
+                  <Flex mt={3}>
+                    <NextLink href="/register">
+                      <Link ml="auto" color="teal">
+                        Don't have an account?
+                      </Link>
+                    </NextLink>
+                  </Flex>
                 </Form>
               )}
             </Formik>

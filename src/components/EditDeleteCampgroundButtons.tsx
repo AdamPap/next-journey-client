@@ -13,7 +13,7 @@ export const EditDeleteCampgroundButtons: React.FC<EditDeleteCampgroundButtonsPr
     const [, deleteCampground] = useDeleteCampgroundMutation();
 
     return (
-      <Flex justifyContent="end">
+      <Flex justifyContent="end" flexDirection={{ base: "column", sm: "row" }}>
         <NextLink href={"/campground/edit/[id]"} as={`/campground/edit/${id}`}>
           <Button size="sm" leftIcon={<EditIcon />} colorScheme="teal" px={2}>
             Edit
@@ -25,7 +25,8 @@ export const EditDeleteCampgroundButtons: React.FC<EditDeleteCampgroundButtonsPr
           leftIcon={<DeleteIcon />}
           colorScheme="red"
           px={2}
-          ml={2}
+          ml={{ base: 0, sm: 2 }}
+          mt={{ base: 2, sm: 0 }}
           onClick={() => deleteCampground({ id })}
         >
           Delete

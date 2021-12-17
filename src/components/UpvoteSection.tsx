@@ -1,5 +1,5 @@
 import { ChevronUpIcon, ChevronDownIcon } from "@chakra-ui/icons";
-import { Flex, IconButton, Text } from "@chakra-ui/react";
+import { Flex, IconButton, Text, useBreakpointValue } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { CampgroundsQuery, useVoteMutation } from "../generated/graphql";
 
@@ -18,6 +18,7 @@ export const UpvoteSection: React.FC<UpvoteSectionProps> = ({ camp }) => {
       <IconButton
         aria-label="Upvote"
         fontSize="30px"
+        size={useBreakpointValue(["sm", "md"])}
         icon={<ChevronUpIcon />}
         isLoading={loading === "upvote-loading"}
         colorScheme={camp.voteStatus === 1 ? "teal" : undefined}
@@ -39,6 +40,7 @@ export const UpvoteSection: React.FC<UpvoteSectionProps> = ({ camp }) => {
       <IconButton
         aria-label="Downvote"
         fontSize="30px"
+        size={useBreakpointValue(["sm", "md"])}
         icon={<ChevronDownIcon />}
         isLoading={loading === "downvote-loading"}
         colorScheme={camp.voteStatus === -1 ? "red" : undefined}

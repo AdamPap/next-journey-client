@@ -41,7 +41,12 @@ const Index = () => {
 
   return (
     <Layout variant="regular">
-      <Flex p={5} pt={12} justifyContent="space-between" alignItems="center">
+      <Flex
+        p={5}
+        pt={{ base: 8, sm: 12 }}
+        justifyContent="space-between"
+        alignItems="center"
+      >
         <Heading fontSize="x-large">Discover Places</Heading>
         {/* <Box p={4}> */}
         <NextLink href="/create-campground">

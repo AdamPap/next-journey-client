@@ -83,7 +83,7 @@ const Campground: React.FC = ({}) => {
       >
         <Flex justifyContent="space-between" alignItems="flex-end" width="100%">
           <Heading>{data?.campground?.name}</Heading>
-          <Flex>
+          <Flex flexDirection={{ base: "column", sm: "row" }}>
             <Box mr={4}>
               <CampgroundDate timestamp={data?.campground.createdAt} />
             </Box>
@@ -91,7 +91,7 @@ const Campground: React.FC = ({}) => {
               color={
                 data?.campground?.creator.id === userData?.currentUser?.id
                   ? `teal`
-                  : "black"
+                  : "teal.200"
               }
             >
               Posted by
@@ -128,7 +128,7 @@ const Campground: React.FC = ({}) => {
             <Box mt={2} ml={2}>
               {data.campground.points}
             </Box>
-            <Box ml={6}>
+            <Box ml={6} fontSize={{ base: "sm", sm: "md" }}>
               <Location /> {data?.campground?.location}
             </Box>
           </Flex>
