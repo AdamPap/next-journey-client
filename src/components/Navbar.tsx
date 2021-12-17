@@ -37,7 +37,7 @@ export const Navbar: React.FC<NavbarProps> = ({}) => {
               {data?.currentUser?.name}
             </Box>
             <MenuDivider />
-            <MenuItem>
+            <MenuItem display={{ base: "block", sm: "none" }}>
               <Box mr={4} display={{ base: "block", sm: "none" }}>
                 <DarkModeSwitch />
               </Box>
