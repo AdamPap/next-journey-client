@@ -1,8 +1,5 @@
 query users {
   users {
-    id
-    name
-    isAccepted
-    isAdmin
+    ...RegularUser
   }
 }

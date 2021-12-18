@@ -51,6 +51,7 @@ export type LoginInput = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  acceptUser: Scalars['Boolean'];
   changePassword: UserResponse;
   createCampground: Campground;
   deleteCampground: Scalars['Boolean'];
@@ -60,6 +61,11 @@ export type Mutation = {
   register: UserResponse;
   updateCampground?: Maybe<Campground>;
   vote: Scalars['Boolean'];
+};
+
+
+export type MutationAcceptUserArgs = {
+  username: Scalars['String'];
 };
 
 
@@ -163,6 +169,13 @@ export type RegularErrorFragment = { __typename?: 'FieldError', field: string, m
 
 export type RegularUserFragment = { __typename?: 'User', id: number, username: string, name: string, email: string, isAdmin: boolean, isAccepted: boolean };
 
+export type AcceptUserMutationVariables = Exact<{
+  username: Scalars['String'];
+}>;
+
+
+export type AcceptUserMutation = { __typename?: 'Mutation', acceptUser: boolean };
+
 export type ChangePasswordMutationVariables = Exact<{
   token: Scalars['String'];
   newPassword: Scalars['String'];
@@ -257,7 +270,7 @@ export type CurrentUserQuery = { __typename?: 'Query', currentUser?: { __typenam
 export type UsersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type UsersQuery = { __typename?: 'Query', users?: Array<{ __typename?: 'User', id: number, name: string, isAccepted: boolean, isAdmin: boolean }> | null | undefined };
+export type UsersQuery = { __typename?: 'Query', users?: Array<{ __typename?: 'User', id: number, username: string, name: string, email: string, isAdmin: boolean, isAccepted: boolean }> | null | undefined };
 
 export const RegularErrorFragmentDoc = gql`
     fragment RegularError on FieldError {
@@ -275,6 +288,15 @@ export const RegularUserFragmentDoc = gql`
   isAccepted
 }
     `;
+export const AcceptUserDocument = gql`
+    mutation acceptUser($username: String!) {
+  acceptUser(username: $username)
+}
+    `;
+
+export function useAcceptUserMutation() {
+  return Urql.useMutation<AcceptUserMutation, AcceptUserMutationVariables>(AcceptUserDocument);
+};
 export const ChangePasswordDocument = gql`
     mutation ChangePassword($token: String!, $newPassword: String!) {
   changePassword(token: $token, newPassword: $newPassword) {
@@ -463,13 +485,10 @@ export function useCurrentUserQuery(options: Omit<Urql.UseQueryArgs<CurrentUserQ
 export const UsersDocument = gql`
     query users {
   users {
-    id
-    name
-    isAccepted
-    isAdmin
+    ...RegularUser
   }
 }
-    `;
+    ${RegularUserFragmentDoc}`;
 
 export function useUsersQuery(options: Omit<Urql.UseQueryArgs<UsersQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<UsersQuery>({ query: UsersDocument, ...options });
