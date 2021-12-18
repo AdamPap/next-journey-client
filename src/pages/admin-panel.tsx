@@ -9,23 +9,27 @@ import {
 } from "@chakra-ui/react";
 import { withUrqlClient } from "next-urql";
 import Head from "next/head";
-import React from "react";
+import Router from "next/router";
+import React, { useEffect } from "react";
 import { Layout } from "../components/Layout";
-import { useUsersQuery } from "../generated/graphql";
+import { useCurrentUserQuery, useUsersQuery } from "../generated/graphql";
 import { createUrqlClient } from "../utils/createUrqlClient";
 
 interface AdminPanelProps {}
 
 const AdminPanel: React.FC<AdminPanelProps> = ({}) => {
   const [{ data, fetching }] = useUsersQuery();
+  const [{ data: userData }] = useCurrentUserQuery();
 
-  if (fetching) {
-    return <Box>...loading</Box>;
-  }
+  useEffect(() => {
+    if (!fetching && !userData?.currentUser?.isAdmin) {
+      Router.replace("/");
+    }
+  }, [userData, fetching]);
 
-  if (!data) {
-    return <Box>No Data</Box>;
-  }
+  // if (fetching) {
+  //   return <Box>...loading</Box>;
+  // }
 
   return (
     <Layout variant="small">
@@ -33,7 +37,7 @@ const AdminPanel: React.FC<AdminPanelProps> = ({}) => {
         All Users
       </Heading>
       <Flex flexDirection="column" mt={6}>
-        {data.users?.map((user) => (
+        {data?.users?.map((user) => (
           <Box
             fontWeight="bold"
             color={user.isAdmin ? "white" : "gray.900"}
