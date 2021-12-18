@@ -27,6 +27,10 @@ const CreateCampground: React.FC<{}> = ({}) => {
     if (!fetching && !data?.currentUser) {
       router.replace("/login?next=" + router.pathname);
     }
+
+    if (!fetching && !data?.currentUser?.isAccepted) {
+      router.replace("/");
+    }
   }, [fetching, data, router]);
 
   return (
