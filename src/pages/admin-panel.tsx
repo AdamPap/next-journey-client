@@ -61,9 +61,6 @@ const AdminPanel: React.FC<AdminPanelProps> = ({}) => {
                 px={6}
                 my={2}
                 borderRadius="md"
-                onClick={() => {
-                  console.log(user);
-                }}
               >
                 <Flex justifyContent="space-between" alignItems="center">
                   <Text my={3} fontSize="xl">
@@ -74,7 +71,6 @@ const AdminPanel: React.FC<AdminPanelProps> = ({}) => {
                       colorScheme="green"
                       size="sm"
                       onClick={() => {
-                        console.log("Should update user");
                         acceptUser({ username: user.username });
                       }}
                     >
